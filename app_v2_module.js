@@ -15,12 +15,12 @@ var index =require('./routes/index.js');
 // test();
 
 
-//引入database
+//创建管理员账号
 var DB = require('./modules/db.js');
 
 DB.insert('user',{
-    username:"xiaojie",
-    password:"l"
+    _id:"admin",
+    password:"cssadmin"
 },function(err,data){
 });
 
