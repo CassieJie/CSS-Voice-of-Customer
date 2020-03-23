@@ -41,7 +41,7 @@ This project is a web app for *CSS Voice of Customer* based on Bootstrap,Node.js
 
 * **Resource directory**: public
 
-* **Database backup**: honor.json / user.json
+* **Database backup**: honor.json / engineer.json
 
   
 
@@ -62,7 +62,7 @@ Engineer.json: back up of Engineer data
 F:
 cd mongodb-win32-x86_64-2008plus-ssl-3.2.22\bin
 mongoimport -d CSSDataManage -c honor --file D:\project_voc\honor.json --type json
-mongoimport -d CSSDataManage -c Engineer --file D:\project_voc\Engineer.json --type json
+mongoimport -d CSSDataManage -c engineer --file D:\project_voc\engineer.json --type json
 ```
 
 **3. Start up project sever**
