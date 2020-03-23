@@ -210,7 +210,16 @@ router.get('/delete',function(req,res){
     });
     // res.send('productdelete');
 });
-
+//delete  file
+function delFile(path){
+    fs.unlink(path,function(error){
+        if(error){
+            console.log(error);
+            return false;
+        }
+        console.log('删除eml文件成功');
+    })
+}
 
 router.post('/file', function(req, res, next) {
     console.log('开始文件上传....');
@@ -262,14 +271,17 @@ router.post('/file', function(req, res, next) {
 
         if (extname == '.eml') {
             newpath = 'pythonParseMsg/emlFile/' + newfilename;
+            console.log("!!!!new path is"+newpath);
             rename(oldpath, newpath);
             obj = eml.parseRawEml(newfilename, "pythonParseMsg/emlFile/");
             console.log("eml-email in product.js is :" + obj);
+            delFile(newpath);
         } else if (extname == '.msg') {
             newpath = 'pythonParseMsg/msgFile/' + newfilename;
             rename(oldpath, newpath);
             obj = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename);
             console.log("msg-email in product.js is :" + obj);
+            delFile(newpath);
         }
 
         var newobj = obj;
@@ -284,9 +296,14 @@ router.post('/file', function(req, res, next) {
             //工程师的名字-邮箱映射查询
         DB.find('Engineer',{"engEmail":engineer},function (err,data) {
             if(!err){
-                console.log("call-back-engineer-function is"+data[0]);
-                engineer = data[0]._id;
-                console.log("2--"+engineer);
+                if(!data[0]){
+                    console.log("data should be null--"+data[0]);
+                }else{
+                    console.log("call-back-engineer-function is"+data[0]);
+                    engineer = data[0]._id;
+                    console.log("2--"+engineer);
+                }
+
             }else{
                 console.log(err);
             }

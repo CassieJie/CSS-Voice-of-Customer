@@ -2,7 +2,16 @@
 var fs = require('fs');
 var emlformat = require('eml-format');
 var exec = require('child_process').execSync;
-
+//delete  file
+function delFile(path){
+    fs.unlink(path,function(error){
+        if(error){
+            console.log(error);
+            return false;
+        }
+        console.log('删除eml文件成功');
+    })
+}
 
 function Case(id,engineer,date,badge,voice){
     this.caseId = id;
@@ -77,9 +86,10 @@ function parseRawEml(fileName,path) {
             jarry.push(obj1);
 
         }
-
+    delFile(path+'json/'+fileName+".json");
     return jarry;
 }
+
 //调用
 // parseRawEml("1.eml","./pythonParseMsg/emlFile/");
 
@@ -112,6 +122,7 @@ function parseRawMsg(path1,filename) {
         if (error) return console.log(error);
         fs.writeFileSync(path3 + filename + ".json", JSON.stringify(data, " ", 2));
     });
+    delFile(path2 + filename + '.eml');
     //sync
     var data =  fs.readFileSync(path3 + filename + ".json","utf-8");
 
@@ -168,10 +179,8 @@ function parseRawMsg(path1,filename) {
         console.log("Print msg parse data----------");
         jarray.push(obj1);
     }
-    // var result = JSON.stringify(jarray);
+   delFile(path3 + filename + ".json");
     return jarray;
 }
 
 module.exports = {parseRawEml,parseRawMsg};
-
-
