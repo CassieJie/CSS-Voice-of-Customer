@@ -125,7 +125,7 @@ double-escaping the HTML output.
 ```ejs
 <ul>
   <% users.forEach(function(user){ %>
-    <%- include('user/show', {user: user}) %>
+    <%- include('engineer/show', {engineer: engineer}) %>
   <% }); %>
 </ul>
 ```

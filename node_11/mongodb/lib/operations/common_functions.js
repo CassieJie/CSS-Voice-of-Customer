@@ -162,7 +162,7 @@ function indexInformation(db, name, options, callback) {
   // If we specified full information
   const full = options['full'] == null ? false : options['full'];
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
   // Process all the results from the index command and collection

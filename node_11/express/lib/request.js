@@ -218,7 +218,7 @@ req.range = function range(size, options) {
 /**
  * Return the value of param `name` when present or `defaultValue`.
  *
- *  - Checks route placeholders, ex: _/user/:id_
+ *  - Checks route placeholders, ex: _/engineer/:id_
  *  - Checks body params, ex: id=12, {"id":12}
  *  - Checks query string params, ex: ?id=12
  *

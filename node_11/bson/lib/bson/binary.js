@@ -20,7 +20,7 @@ var utils = require('./parser/utils');
  *  - **BSON.BSON_BINARY_SUBTYPE_BYTE_ARRAY**, BSON byte array type.
  *  - **BSON.BSON_BINARY_SUBTYPE_UUID**, BSON uuid type.
  *  - **BSON.BSON_BINARY_SUBTYPE_MD5**, BSON md5 type.
- *  - **BSON.BSON_BINARY_SUBTYPE_USER_DEFINED**, BSON user defined type.
+ *  - **BSON.BSON_BINARY_SUBTYPE_USER_DEFINED**, BSON engineer defined type.
  *
  * @class
  * @param {Buffer} buffer a buffer object containing the binary data.

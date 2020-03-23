@@ -7,7 +7,7 @@ router.get('/',function(req,res){
     DB.find('user',{},function(err,data){
         // console.log('/product的data数据是');
         // console.log(data)
-        res.render('admin/user/index',{
+        res.render('admin/engineer/index',{
             list:data
         });
     })

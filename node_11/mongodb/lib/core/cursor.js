@@ -642,7 +642,7 @@ function isConnectionDead(self, callback) {
 }
 
 /**
- * Validate if the cursor is dead but was not explicitly killed by user
+ * Validate if the cursor is dead but was not explicitly killed by engineer
  */
 function isCursorDeadButNotkilled(self, callback) {
   // Cursor is dead but not marked killed, return null
@@ -656,7 +656,7 @@ function isCursorDeadButNotkilled(self, callback) {
 }
 
 /**
- * Validate if the cursor is dead and was killed by user
+ * Validate if the cursor is dead and was killed by engineer
  */
 function isCursorDeadAndKilled(self, callback) {
   if (self.cursorState.dead && self.cursorState.killed) {
@@ -668,7 +668,7 @@ function isCursorDeadAndKilled(self, callback) {
 }
 
 /**
- * Validate if the cursor was killed by the user
+ * Validate if the cursor was killed by the engineer
  */
 function isCursorKilled(self, callback) {
   if (self.cursorState.killed) {
@@ -798,7 +798,7 @@ function nextFunction(self, callback) {
       self.connection = connection;
 
       // Tailable cursor getMore result, notify owner about it
-      // No attempt is made here to retry, this is left to the user of the
+      // No attempt is made here to retry, this is left to the engineer of the
       // core module to handle to keep core simple
       if (
         self.cursorState.documents.length === 0 &&

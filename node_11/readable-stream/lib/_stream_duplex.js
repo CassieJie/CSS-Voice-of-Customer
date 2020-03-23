@@ -116,7 +116,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
       return;
     }
 
-    // backward compatibility, the user is explicitly
+    // backward compatibility, the engineer is explicitly
     // managing destroyed
     this._readableState.destroyed = value;
     this._writableState.destroyed = value;

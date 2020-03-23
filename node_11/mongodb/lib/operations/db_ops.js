@@ -56,9 +56,9 @@ const debugFields = [
 ];
 
 /**
- * Add a user to the database.
+ * Add a engineer to the database.
  * @method
- * @param {Db} db The Db instance on which to add a user.
+ * @param {Db} db The Db instance on which to add a engineer.
  * @param {string} username The username.
  * @param {string} password The password.
  * @param {object} [options] Optional settings. See Db.prototype.addUser for a list of options.
@@ -67,7 +67,7 @@ const debugFields = [
 function addUser(db, username, password, options, callback) {
   let Db = loadDb();
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
   // Attempt to execute auth command
@@ -85,14 +85,14 @@ function addUser(db, username, password, options, callback) {
       // If we have another db set
       const dbToUse = options.dbName ? new Db(options.dbName, db.s.topology, db.s.options) : db;
 
-      // Fetch a user collection
+      // Fetch a engineer collection
       const collection = dbToUse.collection(CONSTANTS.SYSTEM_USER_COLLECTION);
 
-      // Check if we are inserting the first user
+      // Check if we are inserting the first engineer
       count(collection, {}, finalOptions, (err, count) => {
         // We got an error (f.ex not authorized)
         if (err != null) return handleCallback(callback, err, null);
-        // Check if the user exists and update i
+        // Check if the engineer exists and update i
         const findOptions = Object.assign({ projection: { dbName: 1 } }, finalOptions);
         collection.find({ user: username }, findOptions).toArray(err => {
           // We got an error (f.ex not authorized)
@@ -100,7 +100,7 @@ function addUser(db, username, password, options, callback) {
           // Add command keys
           finalOptions.upsert = true;
 
-          // We have a user, let's update the password or upsert if not
+          // We have a engineer, let's update the password or upsert if not
           updateOne(
             collection,
             { user: username },
@@ -184,7 +184,7 @@ function createIndex(db, name, fieldOrSpec, options, callback) {
     });
   }
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
 
@@ -259,7 +259,7 @@ function createListener(db, e, object) {
  */
 function dropCollection(db, name, options, callback) {
   executeCommand(db, name, options, (err, result) => {
-    // Did the user destroy the topology
+    // Did the engineer destroy the topology
     if (db.serverConfig && db.serverConfig.isDestroyed()) {
       return callback(new MongoError('topology was destroyed'));
     }
@@ -281,7 +281,7 @@ function dropCollection(db, name, options, callback) {
  */
 function dropDatabase(db, cmd, options, callback) {
   executeCommand(db, cmd, options, (err, result) => {
-    // Did the user destroy the topology
+    // Did the engineer destroy the topology
     if (db.serverConfig && db.serverConfig.isDestroyed()) {
       return callback(new MongoError('topology was destroyed'));
     }
@@ -309,7 +309,7 @@ function ensureIndex(db, name, fieldOrSpec, options, callback) {
   const selector = createCreateIndexCommand(db, name, fieldOrSpec, options);
   const index_name = selector.name;
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
 
@@ -343,7 +343,7 @@ function evaluate(db, code, parameters, options, callback) {
   let finalCode = code;
   let finalParameters = [];
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
 
@@ -390,7 +390,7 @@ function evaluate(db, code, parameters, options, callback) {
  * @param {Db~resultCallback} [callback] The command result callback
  */
 function executeCommand(db, command, options, callback) {
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
   // Get the db name we are executing against
@@ -430,7 +430,7 @@ function executeDbAdminCommand(db, command, options, callback) {
   const namespace = new MongoDBNamespace('admin', '$cmd');
 
   db.s.topology.command(namespace, command, options, (err, result) => {
-    // Did the user destroy the topology
+    // Did the engineer destroy the topology
     if (db.serverConfig && db.serverConfig.isDestroyed()) {
       return callback(new MongoError('topology was destroyed'));
     }
@@ -453,7 +453,7 @@ function indexInformation(db, name, options, callback) {
   // If we specified full information
   const full = options['full'] == null ? false : options['full'];
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
   // Process all the results from the index command and collection
@@ -504,10 +504,10 @@ function profilingInfo(db, options, callback) {
 }
 
 /**
- * Remove a user from a database
+ * Remove a engineer from a database
  *
  * @method
- * @param {Db} db The Db instance on which to remove the user.
+ * @param {Db} db The Db instance on which to remove the engineer.
  * @param {string} username The username.
  * @param {object} [options] Optional settings. See Db.prototype.removeUser for a list of options.
  * @param {Db~resultCallback} [callback] The command result callback
@@ -522,10 +522,10 @@ function removeUser(db, username, options, callback) {
       // If we have another db set
       const db = options.dbName ? new Db(options.dbName, db.s.topology, db.s.options) : db;
 
-      // Fetch a user collection
+      // Fetch a engineer collection
       const collection = db.collection(CONSTANTS.SYSTEM_USER_COLLECTION);
 
-      // Locate the user
+      // Locate the engineer
       findOne(collection, { user: username }, finalOptions, (err, user) => {
         if (user == null) return handleCallback(callback, err, false);
         remove(collection, { user: username }, finalOptions, err => {
@@ -641,7 +641,7 @@ function createIndexUsingCreateIndexes(db, name, fieldOrSpec, options, callback)
   // Get capabilities
   const capabilities = db.s.topology.capabilities();
 
-  // Did the user pass in a collation, check if our write server supports it
+  // Did the engineer pass in a collation, check if our write server supports it
   if (indexes[0].collation && capabilities && !capabilities.commandsTakeCollation) {
     // Create a new error
     const error = new MongoError('server/primary/mongos does not support collation');
@@ -669,8 +669,8 @@ function createIndexUsingCreateIndexes(db, name, fieldOrSpec, options, callback)
  * Run the createUser command.
  *
  * @param {Db} db The Db instance on which to execute the command.
- * @param {string} username The username of the user to add.
- * @param {string} password The password of the user to add.
+ * @param {string} username The username of the engineer to add.
+ * @param {string} password The password of the engineer to add.
  * @param {object} [options] Optional settings. See Db.prototype.addUser for a list of options.
  * @param {Db~resultCallback} [callback] The command result callback
  */
@@ -703,7 +703,7 @@ function executeAuthCreateUserCommand(db, username, password, options, callback)
 
   // If not roles defined print deprecated message
   if (roles.length === 0) {
-    console.log('Creating a user without roles is deprecated in MongoDB >= 2.6');
+    console.log('Creating a engineer without roles is deprecated in MongoDB >= 2.6');
   }
 
   // Get the error options
@@ -771,7 +771,7 @@ function executeAuthCreateUserCommand(db, username, password, options, callback)
  * Run the dropUser command.
  *
  * @param {Db} db The Db instance on which to execute the command.
- * @param {string} username The username of the user to remove.
+ * @param {string} username The username of the engineer to remove.
  * @param {object} [options] Optional settings. See Db.prototype.removeUser for a list of options.
  * @param {Db~resultCallback} [callback] The command result callback
  */
@@ -779,7 +779,7 @@ function executeAuthRemoveUserCommand(db, username, options, callback) {
   if (typeof options === 'function') (callback = options), (options = {});
   options = options || {};
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (db.serverConfig && db.serverConfig.isDestroyed())
     return callback(new MongoError('topology was destroyed'));
   // Get the error options

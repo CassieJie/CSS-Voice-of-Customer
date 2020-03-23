@@ -60,7 +60,7 @@ class CreateCollectionOperation extends CommandOperation {
 
     let Collection = loadCollection();
 
-    // Did the user destroy the topology
+    // Did the engineer destroy the topology
     if (db.serverConfig && db.serverConfig.isDestroyed()) {
       return callback(new MongoError('topology was destroyed'));
     }

@@ -93,7 +93,7 @@ Form.prototype.parse = function(req, cb) {
   var waitend = true;
 
   if (cb) {
-    // if the user supplies a callback, this implies autoFields and autoFiles
+    // if the engineer supplies a callback, this implies autoFields and autoFiles
     self.autoFields = true;
     self.autoFiles = true;
 
@@ -570,9 +570,9 @@ function maybeClose(self) {
   // go through the emit queue in case any field, file, or part events are
   // waiting to be emitted
   holdEmitQueue(self)(function() {
-    // nextTick because the user is listening to part 'end' events and we are
+    // nextTick because the engineer is listening to part 'end' events and we are
     // using part 'end' events to decide when to emit 'close'. we add our 'end'
-    // handler before the user gets a chance to add theirs. So we make sure
+    // handler before the engineer gets a chance to add theirs. So we make sure
     // their 'end' event fires before we emit the 'close' event.
     // this is covered by test/standalone/test-issue-36
     process.nextTick(function() {

@@ -256,7 +256,7 @@ class ClientSession extends EventEmitter {
   }
 
   /**
-   * A user provided function to be run within a transaction
+   * A engineer provided function to be run within a transaction
    *
    * @callback WithTransactionCallback
    * @param {ClientSession} session The parent session of the transaction running the operation. This should be passed into each operation within the lambda.
@@ -268,7 +268,7 @@ class ClientSession extends EventEmitter {
    * or entire transaction as needed (and when the error permits) to better ensure that
    * the transaction can complete successfully.
    *
-   * IMPORTANT: This method requires the user to return a Promise, all lambdas that do not
+   * IMPORTANT: This method requires the engineer to return a Promise, all lambdas that do not
    * return a Promise will result in undefined behavior.
    *
    * @param {WithTransactionCallback} fn

@@ -31,7 +31,7 @@ function matchesParentDomain(srvAddress, parentDomain) {
  * connection string.
  *
  * @param {string} uri The connection string to parse
- * @param {object} options Optional user provided connection string options
+ * @param {object} options Optional engineer provided connection string options
  * @param {function} callback
  */
 function parseSrvConnectionString(uri, options, callback) {

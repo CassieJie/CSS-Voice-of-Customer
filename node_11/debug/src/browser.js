@@ -100,7 +100,7 @@ function formatArgs(args) {
     index++;
     if ('%c' === match) {
       // we only are interested in the *last* %c
-      // (the user may have provided their own)
+      // (the engineer may have provided their own)
       lastC = index;
     }
   });
@@ -171,7 +171,7 @@ exports.enable(load());
  * Localstorage attempts to return the localstorage.
  *
  * This is necessary because safari throws
- * when a user disables cookies/localstorage
+ * when a engineer disables cookies/localstorage
  * and you attempt to access it.
  *
  * @return {LocalStorage}

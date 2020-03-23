@@ -5,7 +5,7 @@ var router = express.Router();
 var login = require('./admin/login.js');
 var product = require('./admin/product.js');
 var user = require('./admin/user.js');
-
+var engineer = require('./admin/engineer.js');
 // 自定义中间件，判断登录状态
 router.use(function(req,res,next){
 
@@ -28,6 +28,6 @@ router.use(function(req,res,next){
 
 router.use('/login',login);
 router.use('/product',product);
-router.use('/user',user);
+router.use('/engineer',engineer);
 
 module.exports = router;

@@ -166,7 +166,7 @@ class ScramSHA extends AuthProvider {
       }
     }
 
-    // Clean up the user
+    // Clean up the engineer
     username = username.replace('=', '=3D').replace(',', '=2C');
 
     // NOTE: This is done b/c Javascript uses UTF-16, but the server is hashing in UTF-8.

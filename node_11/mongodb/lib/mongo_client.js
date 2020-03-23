@@ -132,7 +132,7 @@ const CloseOperation = require('./operations/close');
  * @param {boolean} [options.domainsEnabled=false] Enable the wrapping of the callback in the current domain, disabled by default to avoid perf hit
  * @param {object} [options.validateOptions=false] Validate MongoClient passed in options for correctness
  * @param {string} [options.appname=undefined] The name of the application that created this MongoClient instance. MongoDB 3.4 and newer will print this value in the server log upon establishing each connection. It is also recorded in the slow query log and profile collections
- * @param {string} [options.auth.user=undefined] The username for auth
+ * @param {string} [options.auth.engineer=undefined] The username for auth
  * @param {string} [options.auth.password=undefined] The password for auth
  * @param {string} [options.authMechanism=undefined] Mechanism for authentication: MDEFAULT, GSSAPI, PLAIN, MONGODB-X509, or SCRAM-SHA-1
  * @param {object} [options.compression] Type of compression to use: snappy or zlib
@@ -365,7 +365,7 @@ MongoClient.prototype.isConnected = function(options) {
  * @param {boolean} [options.domainsEnabled=false] Enable the wrapping of the callback in the current domain, disabled by default to avoid perf hit
  * @param {object} [options.validateOptions=false] Validate MongoClient passed in options for correctness
  * @param {string} [options.appname=undefined] The name of the application that created this MongoClient instance. MongoDB 3.4 and newer will print this value in the server log upon establishing each connection. It is also recorded in the slow query log and profile collections
- * @param {string} [options.auth.user=undefined] The username for auth
+ * @param {string} [options.auth.engineer=undefined] The username for auth
  * @param {string} [options.auth.password=undefined] The password for auth
  * @param {string} [options.authMechanism=undefined] Mechanism for authentication: MDEFAULT, GSSAPI, PLAIN, MONGODB-X509, or SCRAM-SHA-1
  * @param {object} [options.compression] Type of compression to use: snappy or zlib
@@ -410,7 +410,7 @@ MongoClient.prototype.startSession = function(options) {
 
 /**
  * Runs a given operation with an implicitly created session. The lifetime of the session
- * will be handled without the need for user interaction.
+ * will be handled without the need for engineer interaction.
  *
  * NOTE: presently the operation MUST return a Promise (either explicit or implicity as an async function)
  *

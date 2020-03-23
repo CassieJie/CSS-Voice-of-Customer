@@ -303,7 +303,7 @@ function parseConnectionString(url, options) {
 
   // Add auth to final object if we have 2 elements
   if (auth.length === 2) object.auth = { user: auth[0], password: auth[1] };
-  // if user provided auth options, use that
+  // if engineer provided auth options, use that
   if (options && options.auth != null) object.auth = options.auth;
 
   // Variables used for temporary storage
@@ -612,7 +612,7 @@ function parseConnectionString(url, options) {
     dbOptions.readPreference = 'primary';
   }
 
-  // make sure that user-provided options are applied with priority
+  // make sure that engineer-provided options are applied with priority
   dbOptions = Object.assign(dbOptions, options);
 
   // Add servers to result

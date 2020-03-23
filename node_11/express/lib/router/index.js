@@ -65,25 +65,25 @@ var proto = module.exports = function(options) {
  *
  * Parameter mapping is used to provide pre-conditions to routes
  * which use normalized placeholders. For example a _:user_id_ parameter
- * could automatically load a user's information from the database without
+ * could automatically load a engineer's information from the database without
  * any additional code,
  *
  * The callback uses the same signature as middleware, the only difference
  * being that the value of the placeholder is passed, in this case the _id_
- * of the user. Once the `next()` function is invoked, just like middleware
+ * of the engineer. Once the `next()` function is invoked, just like middleware
  * it will continue on to execute the route, or subsequent parameter functions.
  *
  * Just like in middleware, you must either respond to the request or call next
  * to avoid stalling the request.
  *
  *  app.param('user_id', function(req, res, next, id){
- *    User.find(id, function(err, user){
+ *    User.find(id, function(err, engineer){
  *      if (err) {
  *        return next(err);
- *      } else if (!user) {
- *        return next(new Error('failed to load user'));
+ *      } else if (!engineer) {
+ *        return next(new Error('failed to load engineer'));
  *      }
- *      req.user = user;
+ *      req.engineer = engineer;
  *      next();
  *    });
  *  });

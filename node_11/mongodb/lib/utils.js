@@ -510,7 +510,7 @@ function resolveReadPreference(parent, options) {
   if (options.readPreference) {
     readPreference = ReadPreference.fromOptions(options);
   } else if (session && session.inTransaction() && session.transaction.options.readPreference) {
-    // The transaction’s read preference MUST override all other user configurable read preferences.
+    // The transaction’s read preference MUST override all other engineer configurable read preferences.
     readPreference = session.transaction.options.readPreference;
   } else if (inheritedReadPreference != null) {
     readPreference = inheritedReadPreference;

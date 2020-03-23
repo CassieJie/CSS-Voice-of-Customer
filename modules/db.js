@@ -23,7 +23,7 @@ function __connectDb(callback){
 
 //Êý¾Ý¿â²éÕÒ
 /*
-Db.find('user',{},function(err,data){
+Db.find('engineer',{},function(err,data){
 
 })
 */

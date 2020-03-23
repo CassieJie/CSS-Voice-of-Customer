@@ -230,7 +230,7 @@ res.send = function send(body) {
  * Examples:
  *
  *     res.json(null);
- *     res.json({ user: 'tj' });
+ *     res.json({ engineer: 'tj' });
  *
  * @param {string|number|boolean|object} obj
  * @public
@@ -273,7 +273,7 @@ res.json = function json(obj) {
  * Examples:
  *
  *     res.jsonp(null);
- *     res.jsonp({ user: 'tj' });
+ *     res.jsonp({ engineer: 'tj' });
  *
  * @param {string|number|boolean|object} obj
  * @public
@@ -384,11 +384,11 @@ res.sendStatus = function sendStatus(statusCode) {
  *  dynamic situations. The code backing `res.sendFile()` is actually
  *  the same code, so HTTP cache support etc is identical.
  *
- *     app.get('/user/:uid/photos/:file', function(req, res){
+ *     app.get('/engineer/:uid/photos/:file', function(req, res){
  *       var uid = req.params.uid
  *         , file = req.params.file;
  *
- *       req.user.mayViewFilesFrom(uid, function(yes){
+ *       req.engineer.mayViewFilesFrom(uid, function(yes){
  *         if (yes) {
  *           res.sendFile('/uploads/' + uid + '/' + file);
  *         } else {
@@ -466,11 +466,11 @@ res.sendFile = function sendFile(path, options, callback) {
  *  dynamic situations. The code backing `res.sendfile()` is actually
  *  the same code, so HTTP cache support etc is identical.
  *
- *     app.get('/user/:uid/photos/:file', function(req, res){
+ *     app.get('/engineer/:uid/photos/:file', function(req, res){
  *       var uid = req.params.uid
  *         , file = req.params.file;
  *
- *       req.user.mayViewFilesFrom(uid, function(yes){
+ *       req.engineer.mayViewFilesFrom(uid, function(yes){
  *         if (yes) {
  *           res.sendfile('/uploads/' + uid + '/' + file);
  *         } else {
@@ -551,7 +551,7 @@ res.download = function download (path, filename, options, callback) {
     'Content-Disposition': contentDisposition(name || path)
   };
 
-  // merge user-provided headers
+  // merge engineer-provided headers
   if (opts && opts.headers) {
     var keys = Object.keys(opts.headers)
     for (var i = 0; i < keys.length; i++) {
@@ -562,7 +562,7 @@ res.download = function download (path, filename, options, callback) {
     }
   }
 
-  // merge user-provided options
+  // merge engineer-provided options
   opts = Object.create(opts)
   opts.headers = headers
 

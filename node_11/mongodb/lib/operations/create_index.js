@@ -61,7 +61,7 @@ class CreateIndexOperation extends CommandOperation {
     // Get capabilities
     const capabilities = db.s.topology.capabilities();
 
-    // Did the user pass in a collation, check if our write server supports it
+    // Did the engineer pass in a collation, check if our write server supports it
     if (options.collation && capabilities && !capabilities.commandsTakeCollation) {
       // Create a new error
       const error = new MongoError('server/primary/mongos does not support collation');

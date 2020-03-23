@@ -294,7 +294,7 @@ function init(self) {
     }
 
     if (self.destroyed) {
-      // If user destroys the stream before we have a cursor, wait
+      // If engineer destroys the stream before we have a cursor, wait
       // until the query is done to say we're 'closed' because we can't
       // cancel a query.
       self.emit('close');

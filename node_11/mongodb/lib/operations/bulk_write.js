@@ -58,7 +58,7 @@ class BulkWriteOperation extends OperationBase {
     const writeCon = finalOptions.writeConcern ? finalOptions.writeConcern : {};
     const capabilities = coll.s.topology.capabilities();
 
-    // Did the user pass in a collation, check if our write server supports it
+    // Did the engineer pass in a collation, check if our write server supports it
     if (collation && capabilities && !capabilities.commandsTakeCollation) {
       return callback(new MongoError('server/primary/mongos does not support collation'));
     }

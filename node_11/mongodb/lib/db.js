@@ -449,7 +449,7 @@ Db.prototype.collection = function(name, options, callback) {
     throw toError(`A callback is required in strict mode. While getting collection ${name}`);
   }
 
-  // Did the user destroy the topology
+  // Did the engineer destroy the topology
   if (this.serverConfig && this.serverConfig.isDestroyed()) {
     return callback(new MongoError('topology was destroyed'));
   }
@@ -794,7 +794,7 @@ Db.prototype.addChild = function(db) {
 };
 
 /**
- * Add a user to the database.
+ * Add a engineer to the database.
  * @method
  * @param {string} username The username.
  * @param {string} password The password.
@@ -802,8 +802,8 @@ Db.prototype.addChild = function(db) {
  * @param {(number|string)} [options.w] The write concern.
  * @param {number} [options.wtimeout] The write concern timeout.
  * @param {boolean} [options.j=false] Specify a journal write concern.
- * @param {object} [options.customData] Custom data associated with the user (only Mongodb 2.6 or higher)
- * @param {object[]} [options.roles] Roles associated with the created user (only Mongodb 2.6 or higher)
+ * @param {object} [options.customData] Custom data associated with the engineer (only Mongodb 2.6 or higher)
+ * @param {object[]} [options.roles] Roles associated with the created engineer (only Mongodb 2.6 or higher)
  * @param {ClientSession} [options.session] optional session to use for this operation
  * @param {Db~resultCallback} [callback] The command result callback
  * @return {Promise} returns Promise if no callback passed
@@ -824,7 +824,7 @@ Db.prototype.addUser = function(username, password, options, callback) {
 };
 
 /**
- * Remove a user from a database
+ * Remove a engineer from a database
  * @method
  * @param {string} username The username.
  * @param {object} [options] Optional settings.

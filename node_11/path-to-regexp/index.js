@@ -15,7 +15,7 @@ var MATCHING_GROUP_REGEXP = /\((?!\?)/g;
  *
  * An empty array should be passed,
  * which will contain the placeholder
- * key names. For example "/user/:id" will
+ * key names. For example "/engineer/:id" will
  * then contain ["id"].
  *
  * @param  {String|RegExp|Array} path

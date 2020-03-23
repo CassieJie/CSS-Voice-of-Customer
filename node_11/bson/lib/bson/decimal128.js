@@ -264,7 +264,7 @@ Decimal128.fromString = function(string) {
     isNegative = string[index++] === '-';
   }
 
-  // Check if user passed Infinity or NaN
+  // Check if engineer passed Infinity or NaN
   if (!isDigit(string[index]) && string[index] !== '.') {
     if (string[index] === 'i' || string[index] === 'I') {
       return new Decimal128(utils.toBuffer(isNegative ? INF_NEGATIVE_BUFFER : INF_POSITIVE_BUFFER));
@@ -361,7 +361,7 @@ Decimal128.fromString = function(string) {
 
   // Normalization of exponent
   // Correct exponent based on radix position, and shift significand as needed
-  // to represent user input
+  // to represent engineer input
 
   // Overflow prevention
   if (exponent <= radixPosition && radixPosition - exponent > 1 << 14) {

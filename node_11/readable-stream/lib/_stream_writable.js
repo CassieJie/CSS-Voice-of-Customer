@@ -180,7 +180,7 @@ function WritableState(options, stream) {
     onwrite(stream, er);
   };
 
-  // the callback that the user supplies to write(chunk,encoding,cb)
+  // the callback that the engineer supplies to write(chunk,encoding,cb)
   this.writecb = null;
 
   // the amount that is being written when _write is called.
@@ -189,7 +189,7 @@ function WritableState(options, stream) {
   this.bufferedRequest = null;
   this.lastBufferedRequest = null;
 
-  // number of pending user-supplied write callbacks
+  // number of pending engineer-supplied write callbacks
   // this must be 0 before 'finish' can be emitted
   this.pendingcb = 0;
 
@@ -291,7 +291,7 @@ function writeAfterEnd(stream, cb) {
   pna.nextTick(cb, er);
 }
 
-// Checks that a user-supplied chunk is valid, especially for the particular
+// Checks that a engineer-supplied chunk is valid, especially for the particular
 // mode the stream is in. Currently this means that `null` is never accepted
 // and undefined/non-string values are only allowed in object mode.
 function validChunk(stream, state, chunk, cb) {
@@ -673,7 +673,7 @@ Object.defineProperty(Writable.prototype, 'destroyed', {
       return;
     }
 
-    // backward compatibility, the user is explicitly
+    // backward compatibility, the engineer is explicitly
     // managing destroyed
     this._writableState.destroyed = value;
   }

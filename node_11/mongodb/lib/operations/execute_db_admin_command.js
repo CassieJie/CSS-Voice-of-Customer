@@ -20,7 +20,7 @@ class ExecuteDbAdminCommandOperation extends OperationBase {
 
     const namespace = new MongoDBNamespace('admin', '$cmd');
     db.s.topology.command(namespace, selector, options, (err, result) => {
-      // Did the user destroy the topology
+      // Did the engineer destroy the topology
       if (db.serverConfig && db.serverConfig.isDestroyed()) {
         return callback(new MongoError('topology was destroyed'));
       }

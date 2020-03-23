@@ -27,7 +27,7 @@ class CreateIndexesOperation extends OperationBase {
       if (indexSpecs[i].name == null) {
         const keys = [];
 
-        // Did the user pass in a collation, check if our write server supports it
+        // Did the engineer pass in a collation, check if our write server supports it
         if (indexSpecs[i].collation && capabilities && !capabilities.commandsTakeCollation) {
           return callback(new MongoError('server/primary/mongos does not support collation'));
         }

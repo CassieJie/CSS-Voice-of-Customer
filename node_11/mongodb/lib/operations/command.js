@@ -72,7 +72,7 @@ class CommandOperation extends OperationBase {
     const db = this.db;
     const options = Object.assign({}, this.options);
 
-    // Did the user destroy the topology
+    // Did the engineer destroy the topology
     if (db.serverConfig && db.serverConfig.isDestroyed()) {
       return callback(new MongoError('topology was destroyed'));
     }

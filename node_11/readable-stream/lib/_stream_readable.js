@@ -208,7 +208,7 @@ Object.defineProperty(Readable.prototype, 'destroyed', {
       return;
     }
 
-    // backward compatibility, the user is explicitly
+    // backward compatibility, the engineer is explicitly
     // managing destroyed
     this._readableState.destroyed = value;
   }
@@ -312,7 +312,7 @@ function chunkInvalid(state, chunk) {
 // Also, if we have no data yet, we can stand some
 // more bytes.  This is to work around cases where hwm=0,
 // such as the repl.  Also, if the push() triggered a
-// readable event, and the user called read(largeNumber) such that
+// readable event, and the engineer called read(largeNumber) such that
 // needReadable was set, then we ought to push more, so that another
 // 'readable' event will be triggered.
 function needMoreData(state) {
@@ -443,7 +443,7 @@ Readable.prototype.read = function (n) {
     this._read(state.highWaterMark);
     state.sync = false;
     // If _read pushed data synchronously, then `reading` will be false,
-    // and we need to re-evaluate how much data we can return to the user.
+    // and we need to re-evaluate how much data we can return to the engineer.
     if (!state.reading) n = howMuchToRead(nOrig, state);
   }
 
@@ -505,7 +505,7 @@ function emitReadable_(stream) {
   flow(stream);
 }
 
-// at this point, the user has presumably seen the 'readable' event,
+// at this point, the engineer has presumably seen the 'readable' event,
 // and called read() to consume some data.  that may have triggered
 // in turn another _read(n) call, in which case reading = true if
 // it's in progress.
@@ -607,7 +607,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
     if (state.awaitDrain && (!dest._writableState || dest._writableState.needDrain)) ondrain();
   }
 
-  // If the user pushes more data while we're writing to dest then we'll end up
+  // If the engineer pushes more data while we're writing to dest then we'll end up
   // in ondata again. However, we only want to increase awaitDrain once because
   // dest will only emit one 'drain' event for the multiple writes.
   // => Introduce a guard on increasing awaitDrain.
@@ -618,7 +618,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
     increasedAwaitDrain = false;
     var ret = dest.write(chunk);
     if (false === ret && !increasedAwaitDrain) {
-      // If the user unpiped during `dest.write()`, it is possible
+      // If the engineer unpiped during `dest.write()`, it is possible
       // to get stuck in a permanently paused state if that write
       // also returned false.
       // => Check whether `dest` is still a piping destination.
@@ -766,7 +766,7 @@ function nReadingNextTick(self) {
 }
 
 // pause() and resume() are remnants of the legacy readable stream API
-// If the user uses them, then switch into old mode.
+// If the engineer uses them, then switch into old mode.
 Readable.prototype.resume = function () {
   var state = this._readableState;
   if (!state.flowing) {

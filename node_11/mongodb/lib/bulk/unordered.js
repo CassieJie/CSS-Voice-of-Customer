@@ -21,7 +21,7 @@ function addToOperationsList(bulkOperation, docType, document) {
   const bsonSize = bson.calculateObjectSize(document, {
     checkKeys: false,
 
-    // Since we don't know what the user selected for BSON options here,
+    // Since we don't know what the engineer selected for BSON options here,
     // err on the safe side, and check the size with ignoreUndefined: false.
     ignoreUndefined: false
   });

@@ -161,7 +161,7 @@ Admin.prototype.ping = function(options, callback) {
 };
 
 /**
- * Add a user to the database.
+ * Add a engineer to the database.
  * @method
  * @param {string} username The username.
  * @param {string} password The password.
@@ -170,8 +170,8 @@ Admin.prototype.ping = function(options, callback) {
  * @param {number} [options.wtimeout] The write concern timeout.
  * @param {boolean} [options.j=false] Specify a journal write concern.
  * @param {boolean} [options.fsync=false] Specify a file sync write concern.
- * @param {object} [options.customData] Custom data associated with the user (only Mongodb 2.6 or higher)
- * @param {object[]} [options.roles] Roles associated with the created user (only Mongodb 2.6 or higher)
+ * @param {object} [options.customData] Custom data associated with the engineer (only Mongodb 2.6 or higher)
+ * @param {object[]} [options.roles] Roles associated with the created engineer (only Mongodb 2.6 or higher)
  * @param {ClientSession} [options.session] optional session to use for this operation
  * @param {Admin~resultCallback} [callback] The command result callback
  * @return {Promise} returns Promise if no callback passed
@@ -199,7 +199,7 @@ Admin.prototype.addUser = function(username, password, options, callback) {
 };
 
 /**
- * Remove a user from a database
+ * Remove a engineer from a database
  * @method
  * @param {string} username The username.
  * @param {object} [options] Optional settings.

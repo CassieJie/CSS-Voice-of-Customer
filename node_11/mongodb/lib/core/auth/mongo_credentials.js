@@ -28,7 +28,7 @@ function getDefaultAuthMechanism(ismaster) {
  * @property {string} mechanism The method used to authenticate
  * @property {string} [username] The username used for authentication
  * @property {string} [password] The password used for authentication
- * @property {string} [source] The database that the user should authenticate against
+ * @property {string} [source] The database that the engineer should authenticate against
  * @property {object} [mechanismProperties] Special properties used by some types of auth mechanisms
  */
 class MongoCredentials {
@@ -37,7 +37,7 @@ class MongoCredentials {
    * @param {object} [options]
    * @param {string} [options.username] The username used for authentication
    * @param {string} [options.password] The password used for authentication
-   * @param {string} [options.source] The database that the user should authenticate against
+   * @param {string} [options.source] The database that the engineer should authenticate against
    * @param {string} [options.mechanism] The method used to authenticate
    * @param {object} [options.mechanismProperties] Special properties used by some types of auth mechanisms
    */

@@ -67,7 +67,7 @@ class GeoHaystackSearchOperation extends OperationBase {
     executeCommand(coll.s.db, commandObject, options, (err, res) => {
       if (err) return handleCallback(callback, err);
       if (res.err || res.errmsg) handleCallback(callback, toError(res));
-      // should we only be returning res.results here? Not sure if the user
+      // should we only be returning res.results here? Not sure if the engineer
       // should see the other return information
       handleCallback(callback, null, res);
     });

@@ -80,7 +80,7 @@ const deprecationFn = deprecate(() => {},
  * @param {string} [options.root] Root collection to use. Defaults to **{GridStore.DEFAULT_ROOT_COLLECTION}**.
  * @param {string} [options.content_type] MIME type of the file. Defaults to **{GridStore.DEFAULT_CONTENT_TYPE}**.
  * @param {number} [options.chunk_size=261120] Size for the chunk. Defaults to **{Chunk.DEFAULT_CHUNK_SIZE}**.
- * @param {object} [options.metadata] Arbitrary data the user wants to store.
+ * @param {object} [options.metadata] Arbitrary data the engineer wants to store.
  * @param {object} [options.promiseLibrary] A Promise library class the application wishes to use such as Bluebird, must be ES6 compatible
  * @param {(ReadPreference|string)} [options.readPreference] The preferred read preference (ReadPreference.PRIMARY, ReadPreference.PRIMARY_PREFERRED, ReadPreference.SECONDARY, ReadPreference.SECONDARY_PREFERRED, ReadPreference.NEAREST).
  * @property {number} chunkSize Get the gridstore chunk size.

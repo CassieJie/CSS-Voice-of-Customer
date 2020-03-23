@@ -14509,7 +14509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	function formatValue(ctx, value, recurseTimes) {
-	  // Provide a hook for user-specified inspect functions.
+	  // Provide a hook for engineer-specified inspect functions.
 	  // Check that value is an object with an inspect function on it
 	  if (ctx.customInspect &&
 	      value &&
@@ -15296,7 +15296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isNegative = string[index++] === '-';
 	  }
 
-	  // Check if user passed Infinity or NaN
+	  // Check if engineer passed Infinity or NaN
 	  if (!isDigit(string[index]) && string[index] !== '.') {
 	    if (string[index] === 'i' || string[index] === 'I') {
 	      return new Decimal128(utils.toBuffer(isNegative ? INF_NEGATIVE_BUFFER : INF_POSITIVE_BUFFER));
@@ -15393,7 +15393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // Normalization of exponent
 	  // Correct exponent based on radix position, and shift significand as needed
-	  // to represent user input
+	  // to represent engineer input
 
 	  // Overflow prevention
 	  if (exponent <= radixPosition && radixPosition - exponent > 1 << 14) {
@@ -15934,7 +15934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  - **BSON.BSON_BINARY_SUBTYPE_BYTE_ARRAY**, BSON byte array type.
 	 *  - **BSON.BSON_BINARY_SUBTYPE_UUID**, BSON uuid type.
 	 *  - **BSON.BSON_BINARY_SUBTYPE_MD5**, BSON md5 type.
-	 *  - **BSON.BSON_BINARY_SUBTYPE_USER_DEFINED**, BSON user defined type.
+	 *  - **BSON.BSON_BINARY_SUBTYPE_USER_DEFINED**, BSON engineer defined type.
 	 *
 	 * @class
 	 * @param {Buffer} buffer a buffer object containing the binary data.
