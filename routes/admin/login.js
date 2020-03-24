@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 // 设置body-parser中间件
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json());
-var md5=require('md5-node');
 var DB = require('../../modules/db.js');
 
 router.get('/',function(req,res){
@@ -18,8 +17,6 @@ router.post('/doLogin',function(req,res){
 
     var username = req.body.username;
     var password = req.body.password;  /*要对用户输入的密码加密*/
-    console.log("username is----"+username);
-    console.log("password is----"+password);
     // 2.连接数据库查询数据
     DB.find('user',{
         _id:username,

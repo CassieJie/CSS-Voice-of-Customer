@@ -20,14 +20,11 @@ router.get('/addEngineer',function (req,res,next) {
 
 router.post('/doAddEngineer',function (req,res,next) {
 
-    console.log("name is" + req.body.engineerName);
-    console.log("email is" + req.body.engineerEmail);
     var engiName = req.body.engineerName;
     var engiEmail = req.body.engineerEmail;
 
     // 2.连接数据库插入数据
     DB.find('engineer', {_id: engiName}, function (err, data) {
-        // console.log("data 是:"+ data[0])
         if (err) {
             console.log('err---find key error');
         } else if (data[0]) {
@@ -50,7 +47,6 @@ router.post('/doAddEngineer',function (req,res,next) {
 
 router.get('/delete',function (req,res,next) {
 
-    console.log("name is" + req.query.id);
     var id = req.query.id;
     DB.deleteOne('engineer',{"_id":id},function(err){
         if(!err){

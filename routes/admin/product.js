@@ -14,12 +14,10 @@ var DB = require('../../modules/db.js');
 
 router.post('/search',function(req,res){
     var Date = req.body.Date;
-    console.log("search for ----"+Date);
     // 2.连接数据库查询数据
     var map = {01:"Jan",02:"Feb",3:"Mar",4:"Apr",5:"May",6:"Jun",7:"Jul",8:"Aug",9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
     var l =map[Date.split('/')[1]];
     Date =l+" "+Date.split('/')[0];
-    console.log("Date is ----"+Date);
 
     DB.find('honor',{
         Date:Date,
@@ -33,7 +31,7 @@ router.post('/search',function(req,res){
             res.render('admin/product/index', {
                 list: []
             });
-           console.log("!!there is no match for search product")
+           console.log("!!there is no match for search date")
         }
     })
 });
@@ -42,7 +40,6 @@ router.post('/search',function(req,res){
 
 router.post('/BadgeSearch',function(req,res){
     var Date = req.body.checkID;
-    console.log("search for ----"+Date);
     // 2.连接数据库查询数据
 
     DB.find('honor',{
@@ -58,7 +55,7 @@ router.post('/BadgeSearch',function(req,res){
             res.render('admin/product/index', {
                 list: []
             })
-            console.log("!!there is no match for search product")
+            console.log("!!there is no match for search date")
         }
     })
 });
@@ -84,7 +81,6 @@ router.get('/add',function(req,res){
 
 
 router.post('/doAdd',function(req,res){
-        console.log("this is Doadd");
         var caseID = req.body.CaseID;
         var engineer = req.body.Engineer;
         var date = req.body.Date;
@@ -102,7 +98,6 @@ router.post('/doAdd',function(req,res){
 
                  // 2.连接数据库插入数据
         DB.find('honor',{_id:caseID},function (err,data) {
-                         // console.log("data 是:"+ data[0])
          if(err) {
             console.log('err---find key error');
                          }
@@ -118,7 +113,6 @@ router.post('/doAdd',function(req,res){
                Badge:myArray
       },function(err,data){
         if(!err){
-            console.log('我要看看我要跳哪儿去了：');
             res.send({redirect: '/admin/product'});
         }
         });
@@ -129,8 +123,6 @@ router.post('/doAdd',function(req,res){
 router.get('/edit',function(req,res){
     // 获取get传值id
     var id = req.query.id;
-    console.log("1--------------"+id)
-    console.log("1type--------------"+typeof id)
     //取badge路径
 
     DB.find('honor',{"_id":id},function(err,data){
@@ -142,8 +134,6 @@ router.get('/edit',function(req,res){
             for (i=0;i<badge.length;i++) {
                 myArray.push(dic1[badge[i]])
             }
-            console.log("取到的bage对应序号是"+myArray.toString())
-            console.log(typeof myArray)
             var setData ={
                 Caseid:data[0]._id,
                 Engineer:data[0].Engineer,
@@ -154,15 +144,15 @@ router.get('/edit',function(req,res){
             res.render('admin/product/edit', {
                 list: setData
             })
+        }else{
+            console.log(err);
         }
-        console.log(err)
+
     });
 
 });
 
 router.post('/ReEdit',function(req,res) {
-
-    console.log("this is ReEdit")
     var caseID = req.body.CaseID;
     var engineer = req.body.Engineer;
     var date = req.body.Date;
@@ -193,7 +183,6 @@ router.post('/ReEdit',function(req,res) {
     DB.update('honor', {"_id": caseID}, setData,
         function (err, data) {
             if (!err) {
-                console.log('我要看看我要跳哪儿去了：');
                 res.send({redirect: '/admin/product'});
             }
             console.log("错误是:" + err);
@@ -235,9 +224,7 @@ router.post('/file', function(req, res, next) {
     //form.maxFields = 1000;  设置所以文件的大小总和
     //rename upload file
     function rename(oldpath, newpath) {
-        console.log("进入rename函数第1");
         fs.rename(oldpath, newpath, function (err) {
-            console.log("进入rename函数第2");
             if (err) {
                 console.error("改名失败" + err);
             } else {
@@ -252,15 +239,11 @@ router.post('/file', function(req, res, next) {
 //解析文件得到obj
     var obj;
     form.parse(req, function (err, fields, files) {
-        //console.log(fields);
-        console.log(files.thumbnail.path);
-        console.log('文件名:' + files.thumbnail.name);
         var t = (new Date()).getTime();
         //生成随机数
         var ran = parseInt(Math.random() * 8999 + 10000);
         //拿到扩展名
         var extname = path.extname(files.thumbnail.name);
-        console.log("扩展名：" + extname);
         //path.normalize('./path//upload/data/../file/./123.jpg'); 规范格式文件名
         var oldpath = path.normalize(files.thumbnail.path);
 
@@ -271,16 +254,13 @@ router.post('/file', function(req, res, next) {
 
         if (extname == '.eml') {
             newpath = 'pythonParseMsg/emlFile/' + newfilename;
-            console.log("!!!!new path is"+newpath);
             rename(oldpath, newpath);
             obj = eml.parseRawEml(newfilename, "pythonParseMsg/emlFile/");
-            console.log("eml-email in product.js is :" + obj);
             delFile(newpath);
         } else if (extname == '.msg') {
             newpath = 'pythonParseMsg/msgFile/' + newfilename;
             rename(oldpath, newpath);
             obj = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename);
-            console.log("msg-email in product.js is :" + obj);
             delFile(newpath);
         }
 
@@ -297,13 +277,9 @@ router.post('/file', function(req, res, next) {
         DB.find('Engineer',{"engEmail":engineer},function (err,data) {
             if(!err){
                 if(!data[0]){
-                    console.log("data should be null--"+data[0]);
                 }else{
-                    console.log("call-back-engineer-function is"+data[0]);
                     engineer = data[0]._id;
-                    console.log("2--"+engineer);
                 }
-
             }else{
                 console.log(err);
             }
@@ -314,7 +290,6 @@ router.post('/file', function(req, res, next) {
         var myArray = newobj[i].cbadge;
         // 2.连接数据库插入数据
         DB.find('honor', {_id: caseID}, function (err, data) {
-            // console.log("data 是:"+ data[0])
 
             if (err) {
                 console.log('err---find key error');
@@ -330,7 +305,6 @@ router.post('/file', function(req, res, next) {
                     Badge: myArray
                 }, function (err, data) {
                     if (!err) {
-                        console.log('我要看看我要跳哪儿去了：');
                     }
                 });
             }

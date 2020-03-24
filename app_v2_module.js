@@ -38,7 +38,7 @@ app.use(session({
         maxAge:1000*60*30
     },
     rolling:true
-}))
+}));
 
 //使用ejs模板引擎   默认找views这个目录
 app.set('view engine','ejs');

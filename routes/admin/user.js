@@ -5,8 +5,7 @@ var DB = require('../../modules/db.js');
 
 router.get('/',function(req,res){
     DB.find('user',{},function(err,data){
-        // console.log('/product的data数据是');
-        // console.log(data)
+
         res.render('admin/engineer/index',{
             list:data
         });

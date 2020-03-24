@@ -9,7 +9,6 @@ function delFile(path){
             console.log(error);
             return false;
         }
-        console.log('É¾³ýemlÎÄ¼þ³É¹¦');
     })
 }
 
@@ -20,49 +19,44 @@ function Case(id,engineer,date,badge,voice){
     this.cbadge = badge;
     this.customeVoice = voice;
 }
-//eml´¦Àí
+//emlï¿½ï¿½ï¿½ï¿½
 function parseRawEml(fileName,path) {
-    console.log("start eml parse!");
     var eml = fs.readFileSync(path+fileName, "utf-8");
 
     emlformat.parse(eml, function(error, data) {
         if (error) return console.log(error);
-//write to json
-        fs.writeFileSync(path+'json/'+fileName+".json", JSON.stringify(data, " ", 2));
+            //write to json
+            fs.writeFileSync(path+'json/'+fileName+".json", JSON.stringify(data, " ", 2));
     });
 
 //Read json file and extract html
    var data = fs.readFileSync(path+'json/'+fileName+".json","utf-8");
-        //js¶ÔÏó
+        //jsï¿½ï¿½ï¿½ï¿½
         var jsObject = JSON.parse(data);
         //get header
         var header = jsObject.headers;
         //engineer
         var str1 = header.To;
         var engName = str1.replace(/\s<.*>$/g,"");
-        // console.log(typeof engName);
-        // console.log("Print:engineer's name ="+engName);
         //Date
         str1 = header.Date;
         var dat = str1.match(/\b[A-Z][a-z]{2}\b\s\d{4}/g).toString();
         //get body
         var body = jsObject.body[0].part.body[1].part.body;
-        // console.log("body is1 ---"+body);
-        // body=body.replace(/\r\n/g," ");
+
         body=body.replace(/=\r\n/g,"");
         body=body.replace('/\=[\s]+/gm',"");
 
         body=body.replace(/\r\n/g," ");
         // fs.writeFileSync('3.json',body);
-        //¸ù¾Ýcaseid¶¨Î»¶ÎÂä
+        //ï¿½ï¿½ï¿½ï¿½caseidï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
         var pagraph = body.match(/<font class=[3D]*"verbatimtext">'.*\s[0-9]{15}<\/p>/g).toString();
         var s = pagraph.split(/<\/p>/g);
-//¹¹ÔìCase¶ÔÏó
+//ï¿½ï¿½ï¿½ï¿½Caseï¿½ï¿½ï¿½ï¿½
         var jarry = new Array();
-//´¦Àíparagraph
+//ï¿½ï¿½ï¿½ï¿½paragraph
         for (var i=0;i<s.length-1;i++){
             var st1 = JSON.stringify(s[i]);
-            console.log("ST1ÊÇ"+st1);
             //CaseID
             var id = st1.match(/SR\s\d{15}/g).toString();
             //voice
@@ -80,7 +74,6 @@ function parseRawEml(fileName,path) {
             var badge = mid.match(/>[\w\s=]*</g);
             for (let j = 0; j < badge.length; j++) {
                 badge[j]="upload/"+badge[j].slice(1,-1)+".png";
-                console.log(badge[j]);
             }
             var obj1 = new Case(id,engName,dat,badge,voice);
             jarry.push(obj1);
@@ -90,11 +83,11 @@ function parseRawEml(fileName,path) {
     return jarry;
 }
 
-//µ÷ÓÃ
+//ï¿½ï¿½ï¿½ï¿½
 // parseRawEml("1.eml","./pythonParseMsg/emlFile/");
 
 
-// £ð£ù£ô£è£ïnÖ´ÐÐ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nÖ´ï¿½ï¿½
 function pythonParseMsg(path1,path2) {
     exec('python3.7 '+path1+' '+path2,function(error,stdout,stderr){
         if(error) {
@@ -102,15 +95,12 @@ function pythonParseMsg(path1,path2) {
         }
         console.log('exec: ' + stdout);
     });
-
-    console.log("finish parse" );
-
 }
-//È¥µô×Ö·û´®Ê×Î²¿Õ¸ñ
+//È¥ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Î²ï¿½Õ¸ï¿½
 function trimStr(str){
     return str.replace(/(^\s*)|(\s*$)/g,"");
 }
-//msg´¦Àí
+//msgï¿½ï¿½ï¿½ï¿½
 function parseRawMsg(path1,filename) {
 
     pythonParseMsg("./pythonParseMsg/outlookmsgfile.py",path1+filename);
@@ -126,14 +116,13 @@ function parseRawMsg(path1,filename) {
     //sync
     var data =  fs.readFileSync(path3 + filename + ".json","utf-8");
 
-    //js¶ÔÏó
+    //jsï¿½ï¿½ï¿½ï¿½
     var jsObject = JSON.parse(data);
     //get header
     var header = jsObject.headers;
     //engineer
     var str1 = header.To;
     var engName = str1.replace(/\s<.*>$/g, "");
-    console.log(engName);
     //Date
     str1 = header.Date;
     var dat = str1.match(/\b[A-Z][a-z]{2}\b\s\d{4}/g).toString();
@@ -143,23 +132,20 @@ function parseRawMsg(path1,filename) {
     body = body.replace('/\=[\s]+/gm', "");
     body = body.replace(/\r\n/g, " ");
     fs.writeFileSync('3.json', body);
-    //¸ù¾Ýcaseid¶¨Î»¶ÎÂä
+    //ï¿½ï¿½ï¿½ï¿½caseidï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
     var pagraph = body.split(/\s'|\s"/g);
 
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
     }else{
-        pagraph = pagraph.slice(1);  //È¥µÚÒ»¸öÔªËØ
+        pagraph = pagraph.slice(1);  //È¥ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½
     }
-    console.log("Paragraph is=" + pagraph);
-    //´¦Àíparagraph
+    //ï¿½ï¿½ï¿½ï¿½paragraph
     var jarray = new Array();
     for (var i = 0; i < pagraph.length; i++) {
         var st1 = pagraph[i];
-        console.log("st1="+st1);
         //CaseID
         var id = st1.match(/SR\s\d{15}/g).toString();
-        console.log("id is=" + id);
         //voice
         var voice = null;
         voice = st1.match(/^.*['"]\s/g);
@@ -171,12 +157,10 @@ function parseRawMsg(path1,filename) {
         var badge = new Array();
 
         mid2.forEach(function (val,index) {
-        // console.log(val+"ÏÂ±êÊÇ"+index);
         val = trimStr(val);
         badge[index] ="upload/"+ val+".png";
         });
         var obj1 = new Case(id, engName, dat, badge, voice);
-        console.log("Print msg parse data----------");
         jarray.push(obj1);
     }
    delFile(path3 + filename + ".json");

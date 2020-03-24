@@ -9,7 +9,6 @@ var engineer = require('./admin/engineer.js');
 // 自定义中间件，判断登录状态
 router.use(function(req,res,next){
 
-    // console.log(req.url);
     //next();
     if(req.url=='/login' || req.url=='/login/doLogin'){
         next();
