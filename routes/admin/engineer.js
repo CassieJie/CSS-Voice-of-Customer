@@ -9,7 +9,7 @@ var DB = require('../../modules/db.js');
 
 router.get('/addEngineer',function (req,res,next) {
     // res.render('admin/product/addEngineer');
-    DB.find('Engineer', {}, function (err, data) {
+    DB.find('engineer', {}, function (err, data) {
     if(!err){
         res.render('admin/engineer/index', {
             list: data
@@ -26,7 +26,7 @@ router.post('/doAddEngineer',function (req,res,next) {
     var engiEmail = req.body.engineerEmail;
 
     // 2.连接数据库插入数据
-    DB.find('Engineer', {_id: engiName}, function (err, data) {
+    DB.find('engineer', {_id: engiName}, function (err, data) {
         // console.log("data 是:"+ data[0])
         if (err) {
             console.log('err---find key error');
@@ -34,7 +34,7 @@ router.post('/doAddEngineer',function (req,res,next) {
             console.log('err---find key yes');
         } else {
             console.log('err---find key no');
-            DB.insert('Engineer', {
+            DB.insert('engineer', {
                 _id: engiName,
                 engEmail: engiEmail
 
@@ -52,7 +52,7 @@ router.get('/delete',function (req,res,next) {
 
     console.log("name is" + req.query.id);
     var id = req.query.id;
-    DB.deleteOne('Engineer',{"_id":id},function(err){
+    DB.deleteOne('engineer',{"_id":id},function(err){
         if(!err){
             console.log("删除成功");
             res.redirect('/admin/engineer/addEngineer');
