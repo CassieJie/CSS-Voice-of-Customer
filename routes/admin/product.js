@@ -209,6 +209,17 @@ function delFile(path){
         console.log('删除eml文件成功');
     })
 }
+function rename(oldp, newp) {
+    fs.rename(oldp, newp, function (err) {
+        if (err) {
+            console.error("改名失败" + err);
+        } else {
+            console.log("!!!改名成功")
+        }
+        // res.render('add', { title: '文件上传成功:', imginfo: newfilename });
+    });
+    //res.end(util.inspect({fields: fields, files: files}));
+}
 
 router.post('/file', function(req, res, next) {
     console.log('开始文件上传....');
@@ -216,29 +227,19 @@ router.post('/file', function(req, res, next) {
     //设置编辑
     form.encoding = 'utf-8';
     //设置文件存储路径
-    form.uploadDir = "public/files/";
+    form.uploadDir = "public\\files\\";
     //保留后缀
     form.keepExtensions = true;
+
     //设置单文件大小限制
     // form.maxFieldsSize = 2 * 1024 * 1024;
     //form.maxFields = 1000;  设置所以文件的大小总和
     //rename upload file
-    function rename(oldpath, newpath) {
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) {
-                console.error("改名失败" + err);
-            } else {
-                console.log("!!!改名成功")
-            }
-            // res.render('add', { title: '文件上传成功:', imginfo: newfilename });
-        });
-        //res.end(util.inspect({fields: fields, files: files}));
-
-    }
 
 //解析文件得到obj
     var obj;
     form.parse(req, function (err, fields, files) {
+        console.log(files.thumbnail.path);
         var t = (new Date()).getTime();
         //生成随机数
         var ran = parseInt(Math.random() * 8999 + 10000);
@@ -274,7 +275,7 @@ router.post('/file', function(req, res, next) {
         //     console.log("true"+engineer);
         // }
             //工程师的名字-邮箱映射查询
-        DB.find('Engineer',{"engEmail":engineer},function (err,data) {
+        DB.find('engineer',{"engEmail":engineer},function (err,data) {
             if(!err){
                 if(!data[0]){
                 }else{

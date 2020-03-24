@@ -89,7 +89,7 @@ function parseRawEml(fileName,path) {
 
 // ��������nִ��
 function pythonParseMsg(path1,path2) {
-    exec('python3.7 '+path1+' '+path2,function(error,stdout,stderr){
+    exec('python '+path1+' '+path2,function(error,stdout,stderr){
         if(error) {
             console.info('stderr : '+stderr);
         }
