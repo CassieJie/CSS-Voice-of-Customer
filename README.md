@@ -108,6 +108,6 @@ http://localhost:3004/
 http://localhost:3004/admin/Product
 
 Login Username: admin
-Login Passwd: devadmin
+Login Passwd: cssadmin
 ```
 
