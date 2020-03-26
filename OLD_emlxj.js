@@ -132,29 +132,20 @@ function parseRawMsg(path1,filename) {
     body = body.replace('/\=[\s]+/gm', "");
     body = body.replace(/\r\n/g, " ");
     fs.writeFileSync('3.json', body);
-    var newarr = new Array();
     //����caseid��λ����
     var pagraph = body.split(/\s'|\s"/g);
     console.log("paragrah is"+pagraph);
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
         console.log("paragrah split afer is"+pagraph);
-
-        for(let i = 0;i<pagraph.length;i++){
-            if(pagraph[i].match(/^=.+/g)){
-                console.log(pagraph[i]);
-            }else{
-                newarr.push(pagraph[i]);
-            }
-        }
     }else{
-        newarr = pagraph.slice(1);  //ȥ��һ��Ԫ��
+        pagraph = pagraph.slice(1);  //ȥ��һ��Ԫ��
     }
-
+   
     //����paragraph
     var jarray = new Array();
-    for (var i = 0; i < newarr.length; i++) {
-        var st1 = newarr[i];
+    for (var i = 0; i < pagraph.length; i++) {
+        var st1 = pagraph[i];
         console.log("st1 is"+st1);
         //CaseID
         var id = st1.match(/SR\s\d{15}/g).toString();

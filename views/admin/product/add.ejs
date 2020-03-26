@@ -60,11 +60,11 @@
 <!--                                <span   style="color: red" class="iderror"></span>-->
                                 <li>  Engineer: <input type="text" name="Engineer" id="Engineer"/></li>
                                 <li>  Badge:
-                                <label style="margin-left: 18px"><input name="Badge" type="checkbox" value="1" />Empathetic </label>
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="2" />High-quality </label>
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="3" />Efficient </label>
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="4" />Resourceful </label>
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="5" />Communicate Effectively </label>
+                                <label style="margin-left: 18px"><input name="Badge" type="checkbox" value="1" />Empathetic </label> <img src="../../upload/Empathetic.png" width="50px">
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="2" />High Quality</label><img src="../../upload/High Quality.png" width="50px" >
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="3" />Efficient </label><img src="../../upload/Efficient.png" width="50px" >
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="4" />Resourceful </label><img src="../../upload/Resourceful.png" width="50px">
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../upload/Communicate Effectively.png" width="50px">
                                 </li>
                                 <li> Date:
                                     <input style="display: inline-block;width: 200px;margin-left: 27px" type="text" name="Date" id="Date" value="2020/02" required class="form-control" autocomplete="off"  >
@@ -147,17 +147,17 @@
 <!--表单提交方法-->
 <script>
     //表单验证
-    // function check(){
-    //     var caseID = $("#CaseID").val();
-    //     //判断纯数字输入
-    //     var isnum = /^\d{15}$/.test(caseID);
-    //     //判断非空、数字、长度
-    //     if( isnum==false){
-    //         alert("Please input a 15-digit caseid!");
-    //         return false;
-    //     }
-    //     return true;
-    // }
+    function check(){
+        var caseID = $("#CaseID").val();
+        //判断纯数字输入
+        var isnum = /^SR\s\d{15}$/.test(caseID);
+        //判断非空、数字、长度
+        if( isnum==false){
+            alert("Please input a correct caseid!");
+            return false;
+        }
+        return true;
+    }
 
     //提交表单给后台
     $('#button1').click(function(){
@@ -171,12 +171,16 @@
         var  para1 = $('#CaseID').val();
         var  para2 = $('#Engineer').val();
         var  para3 = $('#Date').val();
+        console.log("date is++"+para3);
+        var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
+        var l =map[para3.split('/')[1]];
+        para3 =l+" "+para3.split('/')[0];
         var  para4 = JSON.stringify(checkID);
         var  para5 = $('#Voice').val();
 
         //用Ajax传递参数
-        var result = true;
-        console.log("result is"+result)
+        var result = check();
+
         if (result == true) {
 
             $.post('/admin/product/doAdd', {
@@ -188,9 +192,11 @@
             }, function (data) {
                 if(data.repeat == 'yes'){
                     alert("CaseID already exists!")
-                }
-                if (typeof data.redirect == 'string'){
-                    window.location = data.redirect
+                }else if (data.result == 'success'){
+                    alert('Add Case success!');
+                    location.reload;
+                } else {
+                    alert("Add Case error!")
                 }
             })
         }

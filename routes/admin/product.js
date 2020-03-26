@@ -15,7 +15,7 @@ var DB = require('../../modules/db.js');
 router.post('/search',function(req,res){
     var Date = req.body.Date;
     // 2.连接数据库查询数据
-    var map = {01:"Jan",02:"Feb",3:"Mar",4:"Apr",5:"May",6:"Jun",7:"Jul",8:"Aug",9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
+    var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
     var l =map[Date.split('/')[1]];
     Date =l+" "+Date.split('/')[0];
 
@@ -87,7 +87,7 @@ router.post('/doAdd',function(req,res){
         var badge = req.body.checkID;
         var voice = req.body.Voice;
            //取badge路径
-        var dic1 = {"1":"/upload/Empathetic.png","2":"/upload/High-quality.png","3":"/upload/Efficient.png","4":"/upload/Resourceful.png","5":"/upload/Communicate Effectively.png"};
+        var dic1 = {"1":"/upload/Empathetic.png","2":"/upload/High Quality.png","3":"/upload/Efficient.png","4":"/upload/Resourceful.png","5":"/upload/Communicate Effectively.png"};
                 // 获取json数据进行解析
         var myArray=new Array();
         badge = eval(badge)
@@ -103,6 +103,7 @@ router.post('/doAdd',function(req,res){
                          }
                             else if (data[0]) {
                              console.log('err---find key yes');
+             res.send({repeat: 'yes'});
                          }  else{
                             console.log('err---find key no');
                             DB.insert('honor',{
@@ -113,7 +114,7 @@ router.post('/doAdd',function(req,res){
                Badge:myArray
       },function(err,data){
         if(!err){
-            res.send({redirect: '/admin/product'});
+            res.send({result: 'success'});
         }
         });
         }
@@ -127,18 +128,25 @@ router.get('/edit',function(req,res){
 
     DB.find('honor',{"_id":id},function(err,data){
         if (!err){
-            var dic1 = {"/upload/Empathetic.png":"1","/upload/High-quality.png":"2","/upload/Efficient.png":"3","/upload/Resourceful.png":"4","/upload/Communicate Effectively.png":'5'};
+            var dic1 = {"/upload/Empathetic.png":"1","/upload/High Quality.png":"2","/upload/Efficient.png":"3","/upload/Resourceful.png":"4","/upload/Communicate Effectively.png":'5'};
             var myArray=new Array();
             var badge = data[0].Badge;
             var i;
             for (i=0;i<badge.length;i++) {
                 myArray.push(dic1[badge[i]])
             }
+            var date = data[0].Date;
+
+            var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
+            var l = map[date.split(' ')[0]];
+
+            date =date.split(' ')[1]+"/"+l;
+
             var setData ={
                 Caseid:data[0]._id,
                 Engineer:data[0].Engineer,
                 CustomerVoice:data[0].CustomerVoice,
-                Date:data[0].Date,
+                Date:date,
                 Badge:myArray.toString()
             }
             res.render('admin/product/edit', {
@@ -161,7 +169,7 @@ router.post('/ReEdit',function(req,res) {
 //取badge路径
     var dic1 = {
         "1": "/upload/Empathetic.png",
-        "2": "/upload/High-quality.png",
+        "2": "/upload/High Quality.png",
         "3": "/upload/Efficient.png",
         "4": "/upload/Resourceful.png",
         '5':"/upload/Communicate Effectively.png"
@@ -209,17 +217,21 @@ function delFile(path){
         console.log('删除eml文件成功');
     })
 }
+// function rename(oldp, newp) {
+//     fs.rename(oldp, newp, function (err) {
+//         if (err) {
+//             console.error("改名失败" + err);
+//         } else {
+//             console.log("!!!改名成功")
+//         }
+//         // res.render('add', { title: '文件上传成功:', imginfo: newfilename });
+//     });
+//     //res.end(util.inspect({fields: fields, files: files}));
+// }
 function rename(oldp, newp) {
-    fs.rename(oldp, newp, function (err) {
-        if (err) {
-            console.error("改名失败" + err);
-        } else {
-            console.log("!!!改名成功")
-        }
-        // res.render('add', { title: '文件上传成功:', imginfo: newfilename });
-    });
-    //res.end(util.inspect({fields: fields, files: files}));
-}
+    fs.renameSync(oldp, newp);
+    };
+
 
 router.post('/file', function(req, res, next) {
     console.log('开始文件上传....');
@@ -269,6 +281,7 @@ router.post('/file', function(req, res, next) {
         newobj.forEach(function (val,i) {
         var caseID = newobj[i].caseId;
         var engineer = newobj[i].cengineer;
+        engineer = engineer.toLowerCase();
         // var dic1 = {"ZIZHUAN@microsoft.com":"Neil Zhuang","WEXING@microsoft.com":"Wenli Xing","WEYAO@microsoft.com":"Victor Yao","ZHAWAN@microsoft.com":"Grace Wang","ZIXIE@microsoft.com":"Martin Xie","TILA@microsoft.com":"Tianmao Lan"};
         // if (engineer in dic1){
         //     engineer = dic1[engineer];

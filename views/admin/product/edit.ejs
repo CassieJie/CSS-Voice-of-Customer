@@ -38,25 +38,19 @@
                                 <li>  CaseID: <input style="margin-left: 9px" type="text" id="CaseID" value="<%=list.Caseid%>" readonly /></li>
                                 <li>  Engineer: <input type="text" id="Engineer" value="<%=list.Engineer%>" />
                                 <li>  Badge:
-                                <% var u = list.Badge.split(",")%>
-                                <% for (var i in u){
-                                    switch (i) {
-                                        case "0":console.log("this is case 0s")
-                                    }
-                                }%>
 
                                 <label style="margin-left: 18px">
 
                                     <input name="Badge" type="checkbox" value="1" />Empathetic</label>
-                                    <img src="../../../images/Empathetic.png" width="50px">
+                                    <img src="../../upload/Empathetic.png" width="50px">
                                 <label style="margin-left: 5px">
 
-                                    <input name="Badge" type="checkbox" value="2" />High-quality</label>
-                                    <img src="../../../images/High-quality.png" width="50px" >
+                                    <input name="Badge" type="checkbox" value="2" />High Quality</label>
+                                    <img src="../../upload/High Quality.png" width="50px" >
 
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="3" />Efficient </label><img src="../../../images/Efficient.png" width="50px" >
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="4" />Resourceful </label><img src="../../../images/Resourceful.png" width="50px">
-                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../../images/Communicate Effectively.png" width="50px">
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="3" />Efficient </label><img src="../../upload/Efficient.png" width="50px" >
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="4" />Resourceful </label><img src="../../upload/Resourceful.png" width="50px">
+                                <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../upload/Communicate Effectively.png" width="50px">
 
                                 </li>
                                 <li>  Date:
@@ -92,12 +86,13 @@
 
 <!--own script-->
 <script>
-    //´ÓrenderÈ¡Öµµ½checkboxÏÔÊ¾
+    //ï¿½ï¿½renderÈ¡Öµï¿½ï¿½checkboxï¿½ï¿½Ê¾
     var sting2 = '<%=list.Badge%>'
+
     // var sting2="1,2,3"
     $.each((sting2.split(',')),function(i,e){
         if(e){
-            $("input[name='Badge'][value="+e+"]").prop("checked",true);   //Ñ¡ÖÐ£¬²»Ñ¡ÖÐ ÊÇfalse
+            $("input[name='Badge'][value="+e+"]").prop("checked",true);   //Ñ¡ï¿½Ð£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ ï¿½ï¿½false
         }
         else{
             $("input[name='Badge']").prop("checked",false);
@@ -106,39 +101,43 @@
     });
 
     let dateMonthConfig = {
-        // language: "zh-CN", //ÓïÑÔ
-        todayHighlight: true, //ÊÇ·ñ½ñÈÕ¸ßÁÁ
-        format: 'yyyy/mm', //µã»÷ÔÂ·ÝºóÏÔÊ¾ÔÚinputÖÐµÄ¸ñÊ½
-        autoclose: true, //ÊÇ·ñ¿ªÆô×Ô¶¯¹Ø±Õ
-        startView: 1, //¿ªÊ¼ÊÓÍ¼²ã£¬ÎªÔÂÊÓÍ¼²ã
-        maxViewMode:'years', //×î´óÊÓÍ¼²ã£¬ÎªÄêÊÓÍ¼²ã
-        minViewMode:'months', //×îÐ¡ÊÓÍ¼²ã£¬ÎªÔÂÊÓÍ¼²ã
-        startDate:moment().subtract(360,'month').toDate(), //¿ØÖÆ¿ÉÑ¡µÄ×îÔçÔÂ·Ý£¬ÎªÇ°12¸öÔÂ£¨º¬µ±Ç°ÔÂ£©
-        endDate:moment().toDate(), //¿ØÖÆ¿ÉÑ¡µÄ×îÍíÔÂ·Ý£¬Îªµ±Ç°ÔÂ
+        // language: "zh-CN", //ï¿½ï¿½ï¿½ï¿½
+        todayHighlight: true, //ï¿½Ç·ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½
+        format: 'yyyy/mm', //ï¿½ï¿½ï¿½ï¿½Â·Ýºï¿½ï¿½ï¿½Ê¾ï¿½ï¿½inputï¿½ÐµÄ¸ï¿½Ê½
+        autoclose: true, //ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ø±ï¿½
+        startView: 1, //ï¿½ï¿½Ê¼ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        maxViewMode:'years', //ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        minViewMode:'months', //ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        startDate:moment().subtract(360,'month').toDate(), //ï¿½ï¿½ï¿½Æ¿ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Ý£ï¿½ÎªÇ°12ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Â£ï¿½
+        endDate:moment().toDate(), //ï¿½ï¿½ï¿½Æ¿ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Ý£ï¿½Îªï¿½ï¿½Ç°ï¿½ï¿½
         clearBtn:true
     };
 
-    // ÉèÖÃÈÕÀúÊôÐÔ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     $('#Date').datepicker(dateMonthConfig);
 
     $('#submit').click(function(){
-        var checkID = [];//¶¨ÒåÒ»¸ö¿ÕÊý×é
+        var checkID = [];//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         obj = document.getElementById("Badge")
-        $("input[name='Badge']:checked").each(function(i){//°ÑËùÓÐ±»Ñ¡ÖÐµÄ¸´Ñ¡¿òµÄÖµ´æÈëÊý×é
+        $("input[name='Badge']:checked").each(function(i){//ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ñ¡ï¿½ÐµÄ¸ï¿½Ñ¡ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             checkID[i] =$(this).val();
         });
 
         var  para1 = $('#CaseID').val();
         var  para2 = $('#Engineer').val();
         var  para3 = $('#Date').val();
+
+        var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
+        var l =map[para3.split('/')[1]];
+        para3 =l+" "+para3.split('/')[0];
         var  para4 = JSON.stringify(checkID);
         var  para5 = $('#Voice').val();
 
-        //ÓÃAjax´«µÝ²ÎÊý
+        //ï¿½ï¿½Ajaxï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½
 
             $.post('/admin/product/ReEdit',{CaseID:para1,Engineer:para2,Date:para3,checkID:para4,Voice:para5},function(data) {
                 if (typeof data.redirect == 'string'){
-                    window.location = data.redirect
+                    window.location = data.redirect;
                 }
 
             })

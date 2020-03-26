@@ -167,6 +167,28 @@
             content: " ";
             display: block;
         }
+    .menu-icon {
+        width: 25px;
+        height: 20px;
+        border-top: 4.5px solid grey;
+        border-bottom: 4.5px solid grey;
+        background-color: grey;
+        padding: 3px 0;
+
+        background-clip: content-box;
+    }
+        .searchfilter{
+            width: 25px;
+            height: 20px;
+            display: inline-block;
+            background-color: lightgrey;
+            maxgin-top:5px;
+        }
+        .searchdiv{
+            float: right;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: bold;
+        }
 
 </style>
 </head><!--/head-->
@@ -208,22 +230,31 @@
         <div class="container">
             <div class="row">
                 <div class="action">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
                         <h1 class="title">CSS <strong>Customer Hero</strong> Honor Wall</h1>
                         <!--                            <p>CSS <strong>Customer Hero</strong> Honor Wall</p>-->
                     </div>
                 </div>
             </div>
-            <form role="form" class="form-inline" style="float: right" action="/search" method="post" >
-                <div class="form-group date box01" >
-                    <label for="name" style="color: #000000">Please choose date </label>
-                    <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Search</button>
-                </div>
-            </form>
-        </div>
+            <div class="searchdiv" id="searchdiv">Filter By
+                <form id="searchform1" role="form" class="form-inline" style="float: right" action="/search" method="post" >
+                    <div class="form-group date box01" >
+                        <label for="name" style="color: #000000">Please choose date </label>
+                        <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >
+                        <input type="text" name="searchId" id="searchId" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </div>
+
+                </form>
+                <span class="searchfilter">
+                    <div class="menu-icon"></div>
+                </span>
+            </div>
+
+
+    </div>
     </div>
 </section>
 <!--/#action-->
@@ -459,6 +490,13 @@
         document.getElementById('zhezhao').style.display = "none";
     }
 
+</script>
+<script>
+    window.onload = function(){
+        $('#searchdiv').click = function () {
+
+        }
+    }
 </script>
 <script>
     window.onload = function(){

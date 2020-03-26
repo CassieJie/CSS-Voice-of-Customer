@@ -29,15 +29,15 @@
 <!--                            <button type="submit" class="btn btn-default">Search</button>-->
 <!--                        </div>-->
 <!--                    </form>-->
-                    <form id="form1"  action="/admin/engineer/doAddEngineer" method="post">
+                    <form id="form1"  action="#" method="post">
                         <!--                      <form action="" method="">-->
                         <ul>
                             <li>Engineer's Name: <input type="text" name="engineerName" id="engineerName"/></li>
-                            <li>Engineer's Chat: <input style="margin-left: 9px" type="text" name="engineerEmail" id="engineerEmail"/></li>
+                            <li>Engineer's Email: <input style="margin-left: 9px" type="text" name="engineerEmail" id="engineerEmail"  /></li>
                             <!--                                <span   style="color: red" class="iderror"></span>-->
                             <li>
                                 <br/>
-                                <button type="submit" onclick ="" class="btn btn-default" style="background: rgba(66,139,202,0.7);color: white" id="btn">Submit</button>
+                                <button type="button" onclick ="" class="btn btn-default" style="background: rgba(66,139,202,0.7);color: white" id="btn">Submit</button>
                                 <!--                                    <button type="button" onclick ="" class="btn btn-default" style="background: rgba(66,139,202,0.7);color: white" id="btn">Submit</button>-->
                             </li>
 
@@ -78,6 +78,47 @@
         </div>
     </div>
 </div>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+    function check(){
+        var email = $("#engineerEmail").val();
+        //判断输入
+        var islower = /^[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)+$/.test(email);
 
+        if( islower==false){
+            alert("Please input email in lowercase!");
+            return false;
+        }
+        return true;
+    }
+    $('#btn').click(function(){
+
+        var  para1 = $('#engineerName').val();
+        var  para2 = $('#engineerEmail').val();
+
+        //用Ajax传递参数
+        var result = check();
+        if (result == true) {
+
+            $.post('/admin/engineer/doAddEngineer', {
+                engineerName: para1,
+                engineerEmail: para2
+            }, function (data) {
+                if(data.repeat == 'yes'){
+                    alert("Engineer already exists!")
+                }else if (data.result == 'success'){
+                        alert('Add Engineer success!');
+                        location.reload();
+                    }else{
+                        alert("Add Engineer Error!");
+                    }
+
+            })
+        }
+    })
+
+</script>
 </body>
+
+
 </html>

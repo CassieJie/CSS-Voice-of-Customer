@@ -29,16 +29,15 @@ router.post('/doAddEngineer',function (req,res,next) {
             console.log('err---find key error');
         } else if (data[0]) {
             console.log('err---find key yes');
+            res.send({repeat:'yes'});
         } else {
             console.log('err---find key no');
             DB.insert('engineer', {
                 _id: engiName,
                 engEmail: engiEmail
-
             }, function (err, data) {
                 if (!err) {
-                    console.log('Add Engineer success!');
-                    res.redirect('/admin/engineer/addEngineer');
+                    res.send({result:'success'});
                 }
             });
         }
