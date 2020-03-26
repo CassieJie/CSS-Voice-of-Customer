@@ -118,7 +118,7 @@
   }
 
   .padding-top{
-    padding-top: 60px;
+    padding-top: 30px;
   }
 
   .padding-right{
@@ -848,7 +848,7 @@ div::-webkit-scrollbar {
 .tankuang{
   position: relative;
   background: #fff;
-  width: 50%;
+  width: 60%;
   height: 70%;
   border-radius: 10px;
   border-color: black;

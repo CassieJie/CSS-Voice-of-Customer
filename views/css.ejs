@@ -99,7 +99,7 @@
         text-align: left;
         /*font-size: 27px;*/
         color: white;
-        float:left;
+        float:right;
         background-color: green;
         width:70%;
         height:60px;
@@ -127,13 +127,13 @@
         padding: 20px 0px 10px 10px;
         float: right;
         /*width: 240px;*/
-         width:40%;
+         width:30%;
      }
         .content-left{
             float: left;
             position:relative;
             /*width: 500px;*/
-            width: 60%;
+            width: 70%;
         }
         div.content-left>ul{
             padding: 30px 20px 0px 40px;
@@ -167,27 +167,26 @@
             content: " ";
             display: block;
         }
-    .menu-icon {
-        width: 25px;
-        height: 20px;
-        border-top: 4.5px solid grey;
-        border-bottom: 4.5px solid grey;
-        background-color: grey;
-        padding: 3px 0;
+    /*.menu-icon {*/
+    /*    width: 25px;*/
+    /*    height: 20px;*/
+    /*    border-top: 4.5px solid grey;*/
+    /*    border-bottom: 4.5px solid grey;*/
+    /*    background-color: grey;*/
+    /*    padding: 3px 0;*/
 
-        background-clip: content-box;
-    }
-        .searchfilter{
-            width: 25px;
-            height: 20px;
-            display: inline-block;
-            background-color: lightgrey;
-            maxgin-top:5px;
-        }
+    /*    background-clip: content-box;*/
+    /*}*/
+    /*    .searchfilter{*/
+    /*        width: 25px;*/
+    /*        height: 20px;*/
+    /*        display: inline-block;*/
+    /*        background-color: lightgrey;*/
+    /*        maxgin-top:5px;*/
+    /*    }*/
         .searchdiv{
-            float: right;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-weight: bold;
+           height: 60px;
+            marigin-bottom:10px;
         }
 
 </style>
@@ -236,22 +235,10 @@
                     </div>
                 </div>
             </div>
-            <div class="searchdiv" id="searchdiv">Filter By
-                <form id="searchform1" role="form" class="form-inline" style="float: right" action="/search" method="post" >
-                    <div class="form-group date box01" >
-                        <label for="name" style="color: #000000">Please choose date </label>
-                        <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >
-                        <input type="text" name="searchId" id="searchId" class="form-control" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">Search</button>
-                    </div>
+<!--            <div class="searchdiv" id="searchdiv">Filter By-->
 
-                </form>
-                <span class="searchfilter">
-                    <div class="menu-icon"></div>
-                </span>
-            </div>
+
+<!--            </div>-->
 
 
     </div>
@@ -260,7 +247,29 @@
 <!--/#action-->
 
 <section id="blog" class="padding-top padding-bottom">
+
     <div class="container" >
+        <div class="searchdiv">
+            <form id="searchform1" role="form" class="form-inline" style="float: right;padding-left: 10px" action="/searchByDate" method="post" >
+                <div class="form-group date box01" >
+                    <label for="name" style="color: #000000">Search by date </label>
+                    <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
+
+            <form id="searchform2" role="form" class="form-inline" style="float: right;" action="/searchById" method="post" >
+                <div class="form-group date box01" >
+                   <label for="name" style="color: #000000">Search by caseId</label>
+                    <input type="text" name="searchId" id="searchId" class="form-control" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
+        </div>
         <div class="row">
             <div class="masonery_area">
                 <%for(var i=0;i<list.length;i++){%>
@@ -311,7 +320,6 @@
             </button>
         </div>
         <div class="md-title">
-<!--            <button class="md-close" onclick="hidder()">Close me!</button>-->
             <img class="pop-img" src="images/pop_logo.png" >
             <h3 class="pop-h3">YOU are a Customer HERO! </h3>
 
