@@ -4,7 +4,7 @@ This project is a web app for *CSS Voice of Customer* based on Bootstrap,Node.js
 
 ## 一、Deploy Environment
 
-**1. Software Requirements**： Node.js +Express( a framework for Node.js )+ MongoDB
+**1. Software Requirements**： Node.js +Express( a framework for Node.js )+ MongoDB+Python
 
 **2. Download & Add Environment Path：**
 
