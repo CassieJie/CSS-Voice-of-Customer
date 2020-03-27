@@ -275,6 +275,7 @@ router.post('/file', function(req, res, next) {
         }
 
         var newobj = obj;
+        //循环
         newobj.forEach(function (val,i) {
         var caseID = newobj[i].caseId;
         var engineer = newobj[i].cengineer;
@@ -315,13 +316,14 @@ router.post('/file', function(req, res, next) {
                         Date: date,
                         Badge: myArray
                     }, function (err, data) {
-                        if (!err) {
-                            res.send('Upload and parse email successfully！');
+                        if (err) {
+                           console.log(err);
                         }
                     });
                 }
         })
     });
+        res.send('Upload and parse email successfully！');
     });
 });
 

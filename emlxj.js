@@ -135,11 +135,8 @@ function parseRawMsg(path1,filename) {
     var newarr = new Array();
     //����caseid��λ����
     var pagraph = body.split(/\s'|\s"/g);
-    console.log("paragrah is"+pagraph);
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
-        console.log("paragrah split afer is"+pagraph);
-
         for(let i = 0;i<pagraph.length;i++){
             if(pagraph[i].match(/^=.+/g)){
                 console.log(pagraph[i]);
