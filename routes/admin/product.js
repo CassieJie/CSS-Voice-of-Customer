@@ -315,8 +315,8 @@ router.post('/file', function(req, res, next) {
                         Date: date,
                         Badge: myArray
                     }, function (err, data) {
-                        if (err) {
-                            res.send({result: 'failed'});
+                        if (!err) {
+                            res.send('Upload and parse email successfully！');
                         }
                     });
                 }

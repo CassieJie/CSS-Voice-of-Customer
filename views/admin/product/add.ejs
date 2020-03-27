@@ -117,18 +117,16 @@
             type:'post',
             contentType: false,
             data:inpData,// 打成的数据包可以直接通过send发送
-            processData: false,
-            success:function(data){
-                if(data.result = 'failed'){
-                  alert("Upload email failed!");
-                }else{
-                    alert("Upload email successfully!");
-                }
-                alert("Upload email successfully!");
+            processData:false,
+            dataType:"text",
+            error : function() {
+                alert('parse failed ');
+            },
+            success : function(data) {
+                alert(data);
             }
-
         })
-
+        // alert('upload successfully!' );
     })
     // function check_type(obj){
     //     var str=$(obj).val();
