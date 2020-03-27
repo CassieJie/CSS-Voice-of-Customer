@@ -26,7 +26,7 @@ router.post('/doLogin',function(req,res){
             req.session.userinfo = data[0];
             res.redirect('/admin/product');
         }else{
-            res.send("<script>alert('登陆失败');" +
+            res.send("<script>alert('Login failed');" +
                 "location.href='/admin/login'" +
                 "</script>")
         }

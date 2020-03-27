@@ -201,23 +201,11 @@
                 <a class="navbar-brand" href="index.html">
                     <h1><img style="width: 108px;height:23px ;" src="images/logo.png" alt="logo"></h1>
                 </a>
-
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-<!--                    <li><a href="">Home</a></li>-->
-
-
                 </ul>
             </div>
-<!--            <div class="search">-->
-<!--                <form role="form">-->
-<!--                    <i class="fa fa-search"></i>-->
-<!--                    <div class="field-toggle">-->
-<!--                        <input type="text" class="search-form" autocomplete="off" placeholder="Search">-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
         </div>
     </div>
 </header>
@@ -235,12 +223,6 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="searchdiv" id="searchdiv">Filter By-->
-
-
-<!--            </div>-->
-
-
     </div>
     </div>
 </section>
@@ -253,27 +235,45 @@
             <form id="searchform1" role="form" class="form-inline" style="float: right;padding-left: 10px" action="/searchByDate" method="post" >
                 <div class="form-group date box01" >
                     <label for="name" style="color: #000000">Search by date </label>
-                    <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >
+                    <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="YYYY/MM " >
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-default">Search</button>
                 </div>
             </form>
+<!--            <form id="searchform1" role="form" class="form-inline" style="float: right;padding-left: 10px" aaction="##" method="post">-->
+<!--                <div class="form-group date box01" >-->
+<!--                    <label for="name" style="color: #000000">Search by date </label>-->
+<!--                    <input type="text" name="Date" id="Date" class="form-control" autocomplete="off" placeholder="Date YYYY/MM " >-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <button type="button" class="btn btn-default" id="btnDate">Search</button>-->
+<!--                </div>-->
+<!--            </form>-->
 
             <form id="searchform2" role="form" class="form-inline" style="float: right;" action="/searchById" method="post" >
                 <div class="form-group date box01" >
                    <label for="name" style="color: #000000">Search by caseId</label>
-                    <input type="text" name="searchId" id="searchId" class="form-control" autocomplete="off">
+                    <input type="text" name="searchId" id="searchId" class="form-control" autocomplete="off" placeholder="SR ##...##">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button type="submit" class="btn btn-default" id="btnId">Search</button>
                 </div>
             </form>
+<!--            <form id="searchform3" role="form" class="form-inline" style="float: right;" action="/searchByEngineer" method="post" >-->
+<!--                <div class="form-group date box01" >-->
+<!--                    <label for="name" style="color: #000000">Search by caseId</label>-->
+<!--                    <input type="text" name="searchId" id="searchName" class="form-control" autocomplete="off" placeholder="Jinjie Zhou">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <button type="submit" class="btn btn-default" id="btnId">Search</button>-->
+<!--                </div>-->
+<!--            </form>-->
         </div>
-        <div class="row">
+        <div class="row" >
             <div class="masonery_area">
                 <%for(var i=0;i<list.length;i++){%>
-                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 box shadow1 ">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 box shadow1 " style="height:280px">
                     <div class="single-blog two-column">
                         <div class="post-thumb myphoto">
                             <%for(var j=0;j<list[i].Badge.length;j++){%>
@@ -518,5 +518,58 @@
         }
     }
 </script>
+<!--searById form submit-->
+<!--<script>-->
+<!--    window.onload = function(){-->
+<!--            $('#btnId').click(function () {-->
+
+<!--                var para1 = $('#searchId').val();-->
+<!--                console.log("para1 is"+para1);-->
+<!--                //用Ajax传递参数-->
+
+<!--                if (check()) {-->
+<!--                    $.post('/searchById', {-->
+<!--                        searchId: para1-->
+<!--                    }, function (data) {-->
+<!--                        if (data.result == 'no match') {-->
+<!--                            alert("There is no match for search id");-->
+<!--                            location.reload();-->
+<!--                        }-->
+<!--                    })-->
+<!--                }-->
+<!--            })-->
+<!--        $('#btnDate').click(function () {-->
+
+<!--            var para1 = $('#Date').val();-->
+<!--            console.log("para1 is"+para1);-->
+<!--            //用Ajax传递参数-->
+<!--                $.post('/searchByDate', {-->
+<!--                    Date: para1-->
+<!--                }, function (data) {-->
+<!--                    if (data.result == 'no') {-->
+<!--                        alert("There is no match for search date");-->
+<!--                        location.href='/';-->
+<!--                    }else{-->
+<!--                        console.log("yes")-->
+<!--                    }-->
+<!--                })-->
+
+<!--        })-->
+<!--    }-->
+<!--    function check(){-->
+<!--        var caseID = $("#searchId").val();-->
+<!--        console.log()-->
+<!--        //判断纯数字输入-->
+<!--        var isnum = /^SR\s\d{15}$/.test(caseID);-->
+<!--        //判断非空、数字、长度-->
+<!--        if( isnum==false){-->
+<!--            alert("Please input a correct caseId!(e.g. SR 120020423000164)");-->
+<!--            return false;-->
+<!--        }-->
+<!--        return true;-->
+<!--    }-->
+
+
+<!--</script>-->
 </body>
 </html>

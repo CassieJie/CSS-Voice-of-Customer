@@ -31,7 +31,7 @@ router.post('/search',function(req,res){
             res.render('admin/product/index', {
                 list: []
             });
-           console.log("!!there is no match for search date")
+           console.log("No matching data for your searched Date!")
         }
     })
 });
@@ -55,7 +55,7 @@ router.post('/BadgeSearch',function(req,res){
             res.render('admin/product/index', {
                 list: []
             })
-            console.log("!!there is no match for search date")
+            console.log("No matching data for your searched Badge!")
         }
     })
 });
@@ -203,7 +203,6 @@ router.get('/delete',function(req,res){
         if(!err){
             res.redirect('/admin/product');
         }
-        console.log("删除成功");
     });
     // res.send('productdelete');
 });
@@ -214,7 +213,6 @@ function delFile(path){
             console.log(error);
             return false;
         }
-        console.log('删除eml文件成功');
     })
 }
 // function rename(oldp, newp) {
@@ -230,11 +228,10 @@ function delFile(path){
 // }
 function rename(oldp, newp) {
     fs.renameSync(oldp, newp);
-    };
+    }
 
 
 router.post('/file', function(req, res, next) {
-    console.log('开始文件上传....');
     var form = new formidable.IncomingForm();
     //设置编辑
     form.encoding = 'utf-8';
@@ -306,22 +303,23 @@ router.post('/file', function(req, res, next) {
         DB.find('honor', {_id: caseID}, function (err, data) {
 
             if (err) {
-                console.log('err---find key error');
-            } else if (data[0]) {
+                console.log('err---find key error'+err);
+            }else if(data[0]){
                 console.log('err---find key yes');
-            } else {
-                console.log('err---find key no');
-                DB.insert('honor', {
-                    _id: caseID,
-                    Engineer: engineer,
-                    CustomerVoice: voice,
-                    Date: date,
-                    Badge: myArray
-                }, function (err, data) {
-                    if (!err) {
-                    }
-                });
-            }
+            }else {
+                    console.log('err---find key no');
+                    DB.insert('honor', {
+                        _id: caseID,
+                        Engineer: engineer,
+                        CustomerVoice: voice,
+                        Date: date,
+                        Badge: myArray
+                    }, function (err, data) {
+                        if (err) {
+                            res.send({result: 'failed'});
+                        }
+                    });
+                }
         })
     });
     });

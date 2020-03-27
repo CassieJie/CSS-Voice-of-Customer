@@ -11,7 +11,6 @@ var DB = require('../modules/db.js');
 
 router.post('/searchByDate',function(req,res){
     var Date = req.body.Date;
-
     // 2.连接数据库查询数据
     if (Date == "") {
         DB.find('honor', {}, function (err, data) {
@@ -33,7 +32,9 @@ router.post('/searchByDate',function(req,res){
                     list: data
                 })
             } else {
-                res.send("There is no match for search date");
+                res.send("<script>alert('No matching data for your searched date!');" +
+                    "location.href='/'" +
+                    "</script>");
             }
         })
     }
@@ -49,7 +50,6 @@ router.post('/searchById',function(req,res){
         })
     }
     else {
-
         DB.find('honor', {
             _id: id,
         }, function (err, data) {
@@ -58,7 +58,9 @@ router.post('/searchById',function(req,res){
                     list: data
                 })
             } else {
-                res.send("There is no match for search id");
+                res.send("<script>alert('No matching data for your searched CaseID!');" +
+                    "location.href='/'" +
+                    "</script>");
             }
         })
     }
@@ -93,18 +95,13 @@ router.post('/BadgeSearch',function(req,res){
             res.render('admin/css', {
                 list: []
             })
-            console.log("!!there is no match for search badge")
+            console.log("No matching data for your searched Badge!")
         }
     })
 });
 router.get('/',function(req,res){
 
     DB.find('honor',{},function(err,data){
-        // var i;
-        // for (i=0;i<data.length;i++){
-        //     console.log(data[i].Badge)
-        //     console.log(data[i]._id)
-        // }
 
         res.render('css',{
             list:data

@@ -119,18 +119,16 @@
             data:inpData,// 打成的数据包可以直接通过send发送
             processData: false,
             success:function(data){
-                // if(data.repeat == 'yes'){
-                //   alert("CaseID already exists!")
-                //  }
-                //  if (typeof data.redirect == 'string'){
-                //    window.location = data.redirect
-                //  }
-                //未完成
-
+                if(data.result = 'failed'){
+                  alert("Upload email failed!");
+                }else{
+                    alert("Upload email successfully!");
+                }
+                alert("Upload email successfully!");
             }
 
         })
-        alert("upload successful!");
+
     })
     // function check_type(obj){
     //     var str=$(obj).val();
@@ -153,7 +151,7 @@
         var isnum = /^SR\s\d{15}$/.test(caseID);
         //判断非空、数字、长度
         if( isnum==false){
-            alert("Please input a correct caseid!");
+            alert("Please input a correct caseID!(e.g. SR 120020423000164)");
             return false;
         }
         return true;
@@ -171,7 +169,6 @@
         var  para1 = $('#CaseID').val();
         var  para2 = $('#Engineer').val();
         var  para3 = $('#Date').val();
-        console.log("date is++"+para3);
         var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
         var l =map[para3.split('/')[1]];
         para3 =l+" "+para3.split('/')[0];
@@ -193,10 +190,10 @@
                 if(data.repeat == 'yes'){
                     alert("CaseID already exists!")
                 }else if (data.result == 'success'){
-                    alert('Add Case success!');
+                    alert('Add case successful!');
                     location.reload;
                 } else {
-                    alert("Add Case error!")
+                    alert("Add case error!")
                 }
             })
         }

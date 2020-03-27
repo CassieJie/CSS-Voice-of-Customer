@@ -49,7 +49,6 @@ router.get('/delete',function (req,res,next) {
     var id = req.query.id;
     DB.deleteOne('engineer',{"_id":id},function(err){
         if(!err){
-            console.log("É¾³ý³É¹¦");
             res.redirect('/admin/engineer/addEngineer');
         }
 
