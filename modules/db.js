@@ -40,6 +40,18 @@ exports.find = function(collectionname,json,callback) {
     })
 }
 
+exports.findSort = function(collectionname,callback) {
+
+    __connectDb(function (db, client) {
+        var result = db.collection(collectionname).find().sort({sortDate:-1});
+        result.toArray(function (error, data) {
+
+            callback(error, data);
+            client.close();
+        })
+    })
+}
+
 
 //增加数据
 exports.insert = function(collectionname,json,callback){

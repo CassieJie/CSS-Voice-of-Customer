@@ -299,14 +299,7 @@ router.post('/file', function(req, res, next) {
         });
         var voice = newobj[i].customeVoice;
         var date = newobj[i].cdate;
-        console.log("HI here date is"+date);
         var myArray = newobj[i].cbadge;
-        var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
-        var l = map[date.split(' ')[0]];
-
-        var sdate =[date.split(' ')[1]]+l;
-            console.log("SDATE TYPE IS"+typeof sdate);
-            console.log("SDATE IS"+sdate);
         // 2.连接数据库插入数据
         DB.find('honor', {_id: caseID}, function (err, data) {
 
@@ -321,8 +314,7 @@ router.post('/file', function(req, res, next) {
                         Engineer: engineer,
                         CustomerVoice: voice,
                         Date: date,
-                        Badge: myArray,
-                        sortDate:sdate
+                        Badge: myArray
                     }, function (err, data) {
                         if (err) {
                            console.log(err);

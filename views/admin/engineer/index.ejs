@@ -66,7 +66,7 @@
                             <td><%=list[i]._id%></td>
                             <td><%=list[i].engEmail%></td>
                             <td class="text-center">
-                                <a href="/admin/engineer/edit?id=<%=list[i]._id%>" class="btn btn-success">Update</a>
+<!--                                <a href="/admin/engineer/edit?id=<%=list[i]._id%>" class="btn btn-success">Update</a>-->
                                 <a href="/admin/engineer/delete?id=<%=list[i]._id%>" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
@@ -107,10 +107,10 @@
                 if(data.repeat == 'yes'){
                     alert("Engineer already exists!")
                 }else if (data.result == 'success'){
-                        alert('Add Engineer success!');
+                        alert('Add Engineer successfully!');
                         location.reload();
                     }else{
-                        alert("Add Engineer Error!");
+                        alert("Add Engineer failed!");
                     }
 
             })

@@ -13,7 +13,7 @@ router.post('/searchByDate',function(req,res){
     var Date = req.body.Date;
     // 2.连接数据库查询数据
     if (Date == "") {
-        DB.findSort('honor', function (err, data) {
+        DB.find('honor', {}, function (err, data) {
             res.render('css', {
                 list: data
             })
@@ -43,7 +43,7 @@ router.post('/searchByDate',function(req,res){
 router.post('/searchById',function(req,res){
     var id = req.body.searchId;
     if (id == "") {
-        DB.findSort('honor', function (err, data) {
+        DB.find('honor', {}, function (err, data) {
             res.render('css', {
                 list: data
             })
@@ -101,10 +101,12 @@ router.post('/BadgeSearch',function(req,res){
 });
 router.get('/',function(req,res){
 
-    DB.findSort('honor', function (err, data) {
-        res.render('css', {
-            list: data
-        })
+    DB.find('honor',{},function(err,data){
+
+        res.render('css',{
+            list:data
+        });
+
     })
 });
 module.exports = router;
