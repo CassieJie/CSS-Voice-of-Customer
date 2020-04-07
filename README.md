@@ -88,6 +88,7 @@ db.engineer.find()
 
 ```
 pip install email_validator
+pip install compoundfiles
 ```
 
 **4. Start up project sever**
