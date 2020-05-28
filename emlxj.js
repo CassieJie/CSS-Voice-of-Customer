@@ -135,7 +135,8 @@ function parseRawMsg(path1,filename) {
     fs.writeFileSync('3.json', body);
     var newarr = new Array();
     //????caseid??λ????
-    var pagraph = body.split(/\s'|\s"/g);
+     var pagraph = body.split(/\s'|\s"/g);
+
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
         for(let i = 0;i<pagraph.length;i++){
@@ -149,52 +150,53 @@ function parseRawMsg(path1,filename) {
         newarr = pagraph.slice(1);  //?????????
     }
 
-    //????paragraph  new updated on 19/05/2020
+    var id,voice;
+    var badge= new Array();
+    function parseSpecial1() {
+    //paragraph  new updated on 19/05/2020
 //parse caseid
-    var id = newarr[1].match(/SR\s\d{15}/g).toString();
+    id = newarr[1].match(/SR\s\d{15}/g).toString();
 //parse voice
-    var voice = newarr[0];
+    voice = newarr[0];
 //parse badge
     var mid = newarr[1].match(/\s[\w\s|]*\sSR/g);
     mid = mid[0].split(' SR')[0];
     var mid2 = mid.split('|');
-    var badge = new Array();
+
     mid2.forEach(function (val,index) {
         val = trimStr(val);
         badge[index] ="upload/"+ val+".png";
     });
+}
 
-    //
-    // for (var i = 0; i < newarr.length; i++) {
-    //     var st1 = newarr[i];
-    //     console.log("st1 is"+st1);
-    //     //CaseID
-    //     if (st1.match(/SR\s\d{15}/g)){
-    //         var id = st1.match(/SR\s\d{15}/g).toString();
-    //     }else{
-    //         console.log("newarr["+i+"]haven't id")
-    //     }
-    //
-    //     //voice
-    //     var voice = null;
-    //     voice = st1.match(/^.*['"]\s/g)
-    //     console.log("st1 is---"+st1+"---");
-    //     voice = voice[0].split(/\.['\"]/g)[0];
-    //     //badge
-    //     var mid = st1.match(/\s[\w\s|]*\sSR/g);
-    //     mid = mid[0].split(' SR')[0];
-    //     var mid2 = mid.split('|');
-    //     var badge = new Array();
-    //
-    //     mid2.forEach(function (val,index) {
-    //     val = trimStr(val);
-    //     badge[index] ="upload/"+ val+".png";
-    //     });
-        var obj1 = new Case(id, engName, dat, badge, voice);
-        var jarray = new Array();
-        jarray.push(obj1);
-    // }
-   delFile(path3 + filename + ".json");
+    //����paragraph
+    var jarray = new Array();
+    for (var i = 0; i < newarr.length; i++) {
+        var st1 = newarr[i];
+        console.log("st1 is"+st1);
+        //CaseID
+        if(st1.match(/SR\s\d{15}/g)){
+            id = st1.match(/SR\s\d{15}/g).toString();
+        }else{
+            parseSpecial1();
+            break;
+        }
+
+        //voice
+        voice = st1.match(/^.*['"]\s/g);
+        voice = voice[0].split(/\.['\"]/g)[0];
+        //badge
+        var mid = st1.match(/\s[\w\s|]*\sSR/g);
+        mid = mid[0].split(' SR')[0];
+        var mid2 = mid.split('|');
+        mid2.forEach(function (val,index) {
+            val = trimStr(val);
+            badge[index] ="upload/"+ val+".png";
+        });
+    }
+    var obj1 = new Case(id, engName, dat, badge, voice);
+    jarray.push(obj1);
+    delFile(path3 + filename + ".json");
     return jarray;
 }
 
