@@ -1,5 +1,7 @@
 var express=require('express');
 var fd = require('formidable');
+var fs = require('fs');
+var https = require('https');
 //引入模块
 var admin =require('./routes/admin.js');
 var index =require('./routes/index.js');
@@ -25,7 +27,12 @@ DB.insert('user',{
 });
 
 
-var app=new express();  /*实例化*/
+var app=new express(); 
+var options = {
+    key:fs.readFileSync('./keys/privatekey.pem'),
+    cert:fs.readFileSync('./keys/crt.pem')
+}
+var httpsServer = https.createServer(options,app);
 
 // session保存用户信息
 var session = require("express-session");
@@ -60,6 +67,6 @@ app.use('/admin',admin);
 app.disable('view cache');
 
 
-app.listen(8080,'CSSDevHonors');
+httpsServer.listen(8080, 'localhost');
 
 
