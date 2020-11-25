@@ -59,8 +59,13 @@ app.use('/',index);
 app.use('/admin',admin);
 app.use('/story', storyRouter);
 
+<<<<<<< Updated upstream
 app.disable('view cache');
 
+=======
+app.listen(80,'cssdevhonors');
+// httpsServer.listen(443, 'cssdevhonors');
+>>>>>>> Stashed changes
 
 // httpsServer.listen(443, 'CassieJie-surface');
 app.listen(80,'127.0.0.1');
