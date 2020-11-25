@@ -5,6 +5,7 @@ var https = require('https');
 //引入模块
 var admin =require('./routes/admin.js');
 var index =require('./routes/index.js');
+var storyRouter = require('./routes/story');
 // var email = require('./routes/email_parse.js');
 // var eml = require('./emlxj');
 
@@ -51,22 +52,16 @@ app.use(session({
 app.set('view engine','ejs');
 
 
-//配置public目录为我们的静态资源目录
+//配置public目录-静态资源目录
 app.use(express.static('public'));
-
-// 配置虚拟目录
 app.use('/upload',express.static('upload'));
-
-
-// var index =require('./routes/index.js');
 app.use('/',index);
-//var admin =require('./routes/admin.js');
 app.use('/admin',admin);
-//Email parse
-// app.use('/email_upload',email);
+app.use('/story', storyRouter);
+
 app.disable('view cache');
 
 
-httpsServer.listen(8080, 'localhost');
-
+// httpsServer.listen(443, 'CassieJie-surface');
+app.listen(80,'127.0.0.1');
 
