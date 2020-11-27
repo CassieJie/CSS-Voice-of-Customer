@@ -62,12 +62,11 @@ router.post('/BadgeSearch',function(req,res){
 
 router.get('/',function(req,res){
 
-    DB.find('honor',{},function(err,data){
+    DB.findSort('honor',function(err,data){
 
         res.render('admin/product/index',{
             list:data
         });
-
     })
 });
 
