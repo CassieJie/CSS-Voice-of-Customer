@@ -276,7 +276,7 @@ router.post('/file', function(req, res, next) {
 
         var newobj = obj;
         //循环
-        newobj.forEach(function (val,i) {
+    newobj.forEach(function (val,i) {
         var caseID = newobj[i].caseId;
         var engineer = newobj[i].cengineer;
         engineer = engineer.toLowerCase();

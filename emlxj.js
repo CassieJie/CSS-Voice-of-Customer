@@ -189,6 +189,7 @@ function parseRawMsg(path1,filename) {
     var jarray = new Array();
     for (var i = 0; i < newarr.length; i++) {
         var st1 = newarr[i];
+        console.log("-----newarr.length="+newarr.length+"-----i="+i+"-----st1="+st1)
         //CaseID
         if(st1.match(/SR\s\d{15}/g)){
             parseNormal(st1);
@@ -201,6 +202,8 @@ function parseRawMsg(path1,filename) {
             break;
         }
     }
+    
+    console.log("!-------"+jarray.length);
     delFile(path3 + filename + ".json");
     return jarray;
 }
