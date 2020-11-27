@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <title>CSS Customer Voice| Add Case </title>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" integrity="sha512-63+XcK3ZAZFBhAVZ4irKWe9eorFG0qYsy2CaM5Z+F3kUn76ukznN0cp4SArgItSbDFD1RrrWgVMBY9C/2ZoURA==" crossorigin="anonymous" />
 <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">-->
 <link  href="../../../css/basic.css">
 <link rel="icon" href="../../../images/mslogo.jpg">
@@ -10,6 +11,7 @@
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <!--<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous"></script>
 <style>
     .panel-default > .panel-heading {
         color: white;
@@ -47,7 +49,7 @@
                     </div>
                 </form>
             </div>
-<!--  method2--form submit        -->
+<!--  method2--form submit for case       -->
             <br>
             <div class="panel panel-default">
               
@@ -84,39 +86,109 @@
                                         </form>
 
             </div>
+<!-- form submit for customer story       -->
+<br>
+<div class="panel panel-default">
+  
+    <div class="panel-heading">
+     <b>Add Story / Form submit</b>
+    </div>
+    <form id="form0"  action="##" method="post">
+                <ul>
+                   <li>CaseID: <input style="margin-left: 9px" type="text" name="CaseID" id="SCaseID"/></li>
+                    <form >
+                    <input type="button" name="addtag" id="addTagbutt" value="Add story tag" onclick="addTag()"/>
+                    </form>
+                    <li>  Engineer:
+                       <select name="SEngineer" id="SEngineer">
+                       <%for(var i=0;i<list.length;i++){%>
+                       <option value=<%=i%>><%=list[i]._id%></option>
+                       
+                       <%}%>
+                       </select>
+                    </li>
+                    <li>  Badge:
+                    <label style="margin-left: 18px"><input name="SBadge" type="checkbox" value="1" />Empathetic </label> <img src="../../upload/Empathetic.png" width="50px">
+                    <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="2" />High Quality</label><img src="../../upload/High Quality.png" width="50px" >
+                    <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="3" />Efficient </label><img src="../../upload/Efficient.png" width="50px" >
+                    <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="4" />Resourceful </label><img src="../../upload/Resourceful.png" width="50px">
+                    <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../upload/Communicate Effectively.png" width="50px">
+                    </li>
+                    <li> Date:
+                       <!-- <input style="display: inline-block;width: 200px;margin-left: 27px" type="text" name="weeklyDatePicker" id="weeklyDatePicker" required class="form-control" autocomplete="off"  > -->
+                       <input type='text' style="display: inline-block;width: 200px;margin-left: 27px" id='weeklyDatePicker' placeholder="Select Week" />
 
+                   </li>
+                    <li>
+                       Story:
+                       <textarea style="margin-left: 22px" name="Story" id="Story" cols="40" rows="4"></textarea>
+                   </li>
+                    
+                    <li>
+                        Voice:
+                        <textarea style="margin-left: 22px" name="SCustomerVoice" id="SVoice" cols="40" rows="4"></textarea>
+                    </li>
+
+                    <li>
+                        <br/>
+                        <button type="button" onclick ="" class="btn btn-default" style="background: rgba(66,139,202,0.7);color: white" id="Sbutton1">Submit</button>
+                    </li>
+
+                </ul>
+
+            </form>
+</div>  
     </div>
 
         </div>
     </div>
 <script>
     let dateMonthConfig = {
-        // language: "zh-CN", //ÓïÑÔ
-        todayHighlight: true, //ÊÇ·ñ½ñÈÕ¸ßÁÁ
-        format: 'yyyy/mm', //µã»÷ÔÂ·ÝºóÏÔÊ¾ÔÚinputÖÐµÄ¸ñÊ½
-        autoclose: true, //ÊÇ·ñ¿ªÆô×Ô¶¯¹Ø±Õ
-        startView: 1, //¿ªÊ¼ÊÓÍ¼²ã£¬ÎªÔÂÊÓÍ¼²ã
-        maxViewMode:'years', //×î´óÊÓÍ¼²ã£¬ÎªÄêÊÓÍ¼²ã
-        minViewMode:'months', //×îÐ¡ÊÓÍ¼²ã£¬ÎªÔÂÊÓÍ¼²ã
-        startDate:moment().subtract(360,'month').toDate(), //¿ØÖÆ¿ÉÑ¡µÄ×îÔçÔÂ·Ý£¬ÎªÇ°12¸öÔÂ£¨º¬µ±Ç°ÔÂ£©
-        endDate:moment().toDate(), //¿ØÖÆ¿ÉÑ¡µÄ×îÍíÔÂ·Ý£¬Îªµ±Ç°ÔÂ
+        // language: "zh-CN", //ï¿½ï¿½ï¿½ï¿½
+        todayHighlight: true, //ï¿½Ç·ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½
+        format: 'yyyy/mm', //ï¿½ï¿½ï¿½ï¿½Â·Ýºï¿½ï¿½ï¿½Ê¾ï¿½ï¿½inputï¿½ÐµÄ¸ï¿½Ê½
+        autoclose: true, //ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ø±ï¿½
+        startView: 1, //ï¿½ï¿½Ê¼ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        maxViewMode:'years', //ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        minViewMode:'months', //ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ã£¬Îªï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        startDate:moment().subtract(360,'month').toDate(), //ï¿½ï¿½ï¿½Æ¿ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Ý£ï¿½ÎªÇ°12ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Â£ï¿½
+        endDate:moment().toDate(), //ï¿½ï¿½ï¿½Æ¿ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·Ý£ï¿½Îªï¿½ï¿½Ç°ï¿½ï¿½
         clearBtn:true
     };
 
-    // ÉèÖÃÈÕÀúÊôÐÔ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     $('#Date').datepicker(dateMonthConfig);
     console.log("dayin--"+$('#Date').val())
 </script>
-<!--¼ì²âÉÏ´«ÎÄ¼þºó×º-->
+<script>
+   
+    $(document).ready(function(){
+    moment.locale('en', {
+      week: { dow: 1 } // Monday is the first day of the week
+    });
+
+  $("#weeklyDatePicker").datetimepicker({
+     
+  });
+
+  $('#weeklyDatePicker').on('dp.change', function (e) {
+      var value = $("#weeklyDatePicker").val();
+      var firstDate = moment(value, "MM-DD-YYYY").day(1).format("MM-DD-YYYY");
+      var lastDate =  moment(value, "MM-DD-YYYY").day(7).format("MM-DD-YYYY");
+      $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+    });
+});
+</script>
+<!--ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½×º-->
 <script>
     $('#btn').click(function(){
-        // ÀûÓÃformData½«Õû¸ö±íµ¥Êý¾Ý´ò°ü
+        // ï¿½ï¿½ï¿½ï¿½formDataï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½
         var inpData = new FormData(document.getElementById('form'));
         $.ajax({
             url:'/admin/product/file',
             type:'post',
             contentType: false,
-            data:inpData,// ´ò³ÉµÄÊý¾Ý°ü¿ÉÒÔÖ±½ÓÍ¨¹ýsend·¢ËÍ
+            data:inpData,// ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Í¨ï¿½ï¿½sendï¿½ï¿½ï¿½ï¿½
             processData:false,
             dataType:"text",
             error : function() {
@@ -137,17 +209,16 @@
 
     // if(strtype!=".png" || strtype!=".jpg" || strtype!=".gif"){
     //     $(obj).val("");
-    //     alert("ÇëÉÏ´«gif, jpg, png¸ñÊ½µÄÍ¼Æ¬£¡");
+    //     alert("ï¿½ï¿½ï¿½Ï´ï¿½gif, jpg, pngï¿½ï¿½Ê½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½");
     // }
 </script>
-<!--±íµ¥Ìá½»·½·¨-->
+<!--ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½-->
 <script>
-    //±íµ¥ÑéÖ¤
-    function check(){
-        var caseID = $("#CaseID").val();
-        //ÅÐ¶Ï´¿Êý×ÖÊäÈë
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤
+    function check(caseID){   
+        //ï¿½Ð¶Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var isnum = /^SR\s\d{15}$/.test(caseID);
-        //ÅÐ¶Ï·Ç¿Õ¡¢Êý×Ö¡¢³¤¶È
+        //ï¿½Ð¶Ï·Ç¿Õ¡ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½
         if( isnum==false){
             alert("Please input a correct caseID!(e.g. SR 120020423000164)");
             return false;
@@ -155,12 +226,12 @@
         return true;
     }
 
-    //Ìá½»±íµ¥¸øºóÌ¨
+    //ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨
     $('#button1').click(function(){
-        var checkID = [];//¶¨ÒåÒ»¸ö¿ÕÊý×é
+        var checkID = [];//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         obj = document.getElementById("Badge")
 
-        $("input[name='Badge']:checked").each(function(i){//°ÑËùÓÐ±»Ñ¡ÖÐµÄ¸´Ñ¡¿òµÄÖµ´æÈëÊý×é
+        $("input[name='Badge']:checked").each(function(i){//ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ñ¡ï¿½ÐµÄ¸ï¿½Ñ¡ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             checkID[i] =$(this).val();
         });
 
@@ -173,8 +244,9 @@
         var  para4 = JSON.stringify(checkID);
         var  para5 = $('#Voice').val();
 
-        //ÓÃAjax´«µÝ²ÎÊý
-        var result = check();
+        //ï¿½ï¿½Ajaxï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½
+        var caseID = $("#CaseID").val();
+        var result = check(caseID);
 
         if (result == true) {
 
@@ -196,8 +268,66 @@
             })
         }
     })
-    //     }
+    function addTag(){
+        var txt = document.createElement("input");
+        txt.type = "text";
+        txt.name = "txt";
+        txt.value = "#";
+        $('#addTagbutt').after(txt);
+    }
 
+    $('#Sbutton1').click(function(){
+        var checkID = [];//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var tag = [];
+        obj = document.getElementById("SBadge")
+        
+        $("input[name='SBadge']:checked").each(function(i){
+            checkID[i] =$(this).val();
+        });
+        $("input[name='txt']").each(function(i){
+            tag[i] =$(this).val();
+        });
+        
+        var  para0 = $('#CaseID').val();
+   
+        var  para1 = JSON.stringify(tag);
+        console.log(tag);
+        var  para2 = $("select[name='SEngineer'] option:selected").text();
+        var  para3 = $('#weeklyDatePicker').val();
+        console.log("!!!para3-----"+para3);
+        // var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
+        // var l =map[para3.split('/')[1]];
+        // para3 =l+" "+para3.split('/')[0];
+        // console.log("sdate--"+para3);
+        var  para4 = JSON.stringify(checkID);
+        var  para5 = $('#SVoice').val();
+        var  para6 = $('#Story').val();
+
+        //ï¿½ï¿½Ajaxï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½
+        var scaseID = $("#SCaseID").val();
+        var result = check(scaseID);
+        if (result == true) {
+
+            $.post('/admin/product/addStory', {
+                CaseID:para0,
+                Tag: para1,
+                Engineer: para2,
+                Date: para3,
+                Badge: para4,
+                Voice: para5,
+                Story: para6
+            }, function (data) {
+                if(data.repeat == 'yes'){
+                    alert("Story already exists!");
+                }else if (data.result == 'success'){
+                    alert('Add Story successful!');
+                    $("#form0")[0].reset();
+                } else {
+                    alert("Add Story error!")
+                }
+            })
+        }
+    })
 </script>
 </body>
 </html>

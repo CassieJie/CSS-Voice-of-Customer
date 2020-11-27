@@ -72,12 +72,72 @@ router.get('/',function(req,res){
 });
 
 
-//显示增加商品的页面
+//add页面
 router.get('/add',function(req,res){
-    res.render('admin/product/add');
+    DB.find('engineer',{},function(err,data){
 
+        res.render('admin/product/add',{
+            list:data
+        });
+});
 });
 
+/* Add Story */
+router.post('/addStory',function(req,res){
+    var caseID = req.body.CaseID;
+    var tag = req.body.Tag;
+    var engineer = req.body.Engineer;
+    var date = req.body.Date;
+    var badge = req.body.Badge;
+    var voice = req.body.Voice;
+    var story = req.body.Story;
+    var split0 = date.split(' - ')[0];
+
+    // var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
+    var sdate = split0.split('-')[2]+split0.split('-')[0]+split0.split('-')[1];
+    console.log("---date is"+date+";sdate is"+sdate);
+    //map badge number-path
+    var i;
+    var myArray = new Array();
+    var dic1 = {
+        "1":"/upload/Empathetic.png",
+        "2":"/upload/High Quality.png",
+        "3":"/upload/Efficient.png",
+        "4":"/upload/Resourceful.png",
+        "5":"/upload/Communicate Effectively.png"
+    };
+    badge = eval(badge);
+    for (i=0;i<badge.length;i++) {
+        myArray.push(dic1[badge[i]])
+    }
+    // connect datdabase
+    DB.find('story',{_id:caseID},function (err,data) {
+
+        if(err) {
+            console.log('err---find key error');
+        }else if (data[0]) {
+                console.log('err---find key yes');
+                res.send({repeat: 'yes'});
+            }else{
+                console.log('err---find key not exist');
+                DB.insert('story',{
+                _id:caseID,               //主键caseID
+                Tag:tag,
+                Engineer:engineer,
+                CustomerVoice:voice,
+                Date:date,
+                sortDate:sdate,
+                Badge:myArray,
+                Story:story
+            },function(err,data){
+                if(!err){
+                    res.send({result: 'success'});
+                }
+            });
+        }
+
+    });
+});
 
 
 router.post('/doAdd',function(req,res){
