@@ -115,10 +115,10 @@ router.post('/addStory',function(req,res){
         if(err) {
             console.log('err---find key error');
         }else if (data[0]) {
-                console.log('err---find key yes');
+                console.log('err---find key of story repeat');
                 res.send({repeat: 'yes'});
             }else{
-                console.log('err---find key not exist');
+                console.log('find key of story not exist');
                 DB.insert('story',{
                 _id:caseID,               //主键caseID
                 Tag:tag,
@@ -145,6 +145,10 @@ router.post('/doAdd',function(req,res){
         var date = req.body.Date;
         var badge = req.body.checkID;
         var voice = req.body.Voice;
+        var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
+        var l = map[date.split(' ')[0]];
+
+        var sdate =[date.split(' ')[1]]+l;
            //取badge路径
         var dic1 = {"1":"/upload/Empathetic.png","2":"/upload/High Quality.png","3":"/upload/Efficient.png","4":"/upload/Resourceful.png","5":"/upload/Communicate Effectively.png"};
                 // 获取json数据进行解析
@@ -158,19 +162,20 @@ router.post('/doAdd',function(req,res){
                  // 2.连接数据库插入数据
         DB.find('honor',{_id:caseID},function (err,data) {
          if(err) {
-            console.log('err---find key error');
+            console.log('err---find key of case error');
                          }
                             else if (data[0]) {
-                             console.log('err---find key yes');
+                             console.log('find key of case repeat');
              res.send({repeat: 'yes'});
                          }  else{
-                            console.log('err---find key no');
+                            console.log('find key of case not exist');
                             DB.insert('honor',{
                            _id:caseID,
                           Engineer:engineer,
                      CustomerVoice:voice,
                   Date:date,
-               Badge:myArray
+               Badge:myArray,
+               sortDate:sdate
       },function(err,data){
         if(!err){
             res.send({result: 'success'});
@@ -364,8 +369,6 @@ router.post('/file', function(req, res, next) {
         var l = map[date.split(' ')[0]];
 
         var sdate =[date.split(' ')[1]]+l;
-            console.log("SDATE TYPE IS"+typeof sdate);
-            console.log("SDATE IS"+sdate);
         // 2.连接数据库插入数据
         DB.find('honor', {_id: caseID}, function (err, data) {
 

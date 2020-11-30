@@ -60,7 +60,14 @@
                             <ul>
                                 <li>CaseID: <input style="margin-left: 9px" type="text" name="CaseID" id="CaseID"/></li>
 <!--                                <span   style="color: red" class="iderror"></span>-->
-                                <li>  Engineer: <input type="text" name="Engineer" id="Engineer"/></li>
+                                 <li>  Engineer:
+                       <select name="Engineer" id="Engineer">
+                       <%for(var i=0;i<list.length;i++){%>
+                       <option value=<%=i%>><%=list[i]._id%></option>
+                       
+                       <%}%>
+                       </select>
+                    </li>
                                 <li>  Badge:
                                 <label style="margin-left: 18px"><input name="Badge" type="checkbox" value="1" />Empathetic </label> <img src="../../upload/Empathetic.png" width="50px">
                                 <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="2" />High Quality</label><img src="../../upload/High Quality.png" width="50px" >
@@ -236,7 +243,7 @@
         });
 
         var  para1 = $('#CaseID').val();
-        var  para2 = $('#Engineer').val();
+        var  para2 = $("select[name='Engineer'] option:selected").text();
         var  para3 = $('#Date').val();
         var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
         var l =map[para3.split('/')[1]];
@@ -261,7 +268,7 @@
                     alert("CaseID already exists!")
                 }else if (data.result == 'success'){
                     alert('Add case successful!');
-                    location.reload;
+                    $("#form1")[0].reset();
                 } else {
                     alert("Add case error!")
                 }
