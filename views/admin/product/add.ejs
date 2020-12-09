@@ -8,7 +8,8 @@
 <link  href="../../../css/basic.css">
 <link rel="icon" href="../../../images/mslogo.jpg">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.12.4.js"></script> -->
+<script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
 <!--<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous"></script>
@@ -295,13 +296,11 @@
             tag[i] =$(this).val();
         });
         
-        var  para0 = $('#CaseID').val();
-   
         var  para1 = JSON.stringify(tag);
         console.log(tag);
         var  para2 = $("select[name='SEngineer'] option:selected").text();
         var  para3 = $('#weeklyDatePicker').val();
-        console.log("!!!para3-----"+para3);
+       
         // var map = {"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
         // var l =map[para3.split('/')[1]];
         // para3 =l+" "+para3.split('/')[0];
@@ -316,7 +315,7 @@
         if (result == true) {
 
             $.post('/admin/product/addStory', {
-                CaseID:para0,
+                CaseID:scaseID,
                 Tag: para1,
                 Engineer: para2,
                 Date: para3,
