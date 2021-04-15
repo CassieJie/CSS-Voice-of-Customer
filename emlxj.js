@@ -54,12 +54,18 @@ function parseRawEml(fileName,path) {
         var s = pagraph.split(/<\/p>/g);
 //????Case????
         var jarry = new Array();
+        var id;
 //????paragraph
         for (var i=0;i<s.length-1;i++){
             var st1 = JSON.stringify(s[i]);
             console.log("!!!!input the st1----"+ st1);
             //CaseID
-            var id = st1.match(/SR\s\d{15}/g).toString();
+            if (st1.match(/SR\s\d{15}/g)){
+               id = st1.match(/SR\s\d{15}/g).toString();
+            }else{
+                id = st1.match(/Reference ID\s\d{1,16}/g).toString();
+            }
+            
             //voice
             var voice = null;
             if (st1.match(/Microsoft Translator - English/g)){
