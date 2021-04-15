@@ -153,37 +153,6 @@ function parseRawMsg(path1,filename) {
     var id,voice,badgeCopy;
     var badge= new Array();
     var obj1;
-    function parseSpecial1(newarr) {     //newly updated on 19/05/2020 ; for parsing voice have ( ');
-    //parse caseid
-    id = newarr[1].match(/SR\s\d{15}/g).toString();
-    //parse voice
-    voice = newarr[0];
-    //parse badge
-    var mid = newarr[1].match(/\s[\w\s|]*\sSR/g);
-    mid = mid[0].split(' SR')[0];
-    var mid2 = mid.split('|');
-    mid2.forEach(function (val,index) {
-        val = trimStr(val);
-        badge[index] ="upload/"+ val+".png";
-    });
-        badgeCopy = badge.slice(0);
-}
-    function parseNormal(st1){
-        //caseid
-    id = st1.match(/SR\s\d{15}/g).toString();
-    //voice
-    voice = st1.match(/^.*['"]\s/g);
-    voice = voice[0].split(/\.['\"]/g)[0];
-    //badge
-    var mid = st1.match(/\s[\w\s|]*\sSR/g);
-    mid = mid[0].split(' SR')[0];
-    var mid2 = mid.split('|');
-    mid2.forEach(function (val,index) {
-        val = trimStr(val);
-        badge[index] ="upload/"+ val+".png";
-    });
-    badgeCopy = badge.slice(0);
-}
 
     //����paragraph
     var jarray = new Array();
@@ -195,14 +164,94 @@ function parseRawMsg(path1,filename) {
             parseNormal(st1);
             obj1 = new Case(id, engName, dat, badgeCopy, voice);
             jarray.push(obj1);
+        }else if(st1.match(/Reference ID\s\d{1,16}/g)){    //if case number begin as Reference ID
+            parseSpecial1(st1);
+            obj1 = new Case(id, engName, dat, badgeCopy, voice);
+            jarray.push(obj1);
+            break;
         }else{
-            parseSpecial1(newarr);
+            parseSpecial2(newarr);
             obj1 = new Case(id, engName, dat, badgeCopy, voice);
             jarray.push(obj1);
             break;
         }
     }
-    
+    /*****raw function for paser id,badge... 
+   ****/
+    function parseNormal(st1){
+            //caseid
+        id = st1.match(/SR\s\d{15}/g).toString();
+        //voice
+        voice = st1.match(/^.*['"]\s/g);
+        voice = voice[0].split(/\.['\"]/g)[0];
+        //badge
+        var mid = st1.match(/\s[\w\s|]*\sSR/g);
+        mid = mid[0].split(' SR')[0];
+        var mid2 = mid.split('|');
+        mid2.forEach(function (val,index) {
+            val = trimStr(val);
+            badge[index] ="upload/"+ val+".png";
+        });
+        badgeCopy = badge.slice(0);
+    }
+    function parseNormal(st1){
+    //caseid
+        id = st1.match(/SR\s\d{15}/g).toString();
+    //voice
+        voice = st1.match(/^.*['"]\s/g);
+        voice = voice[0].split(/\.['\"]/g)[0];
+    //badge
+        var mid = st1.match(/\s[\w\s|]*\sSR/g);
+        mid = mid[0].split(' SR')[0];
+        var mid2 = mid.split('|');
+        mid2.forEach(function (val,index) {
+        val = trimStr(val);
+        badge[index] ="upload/"+ val+".png";
+    });
+        badgeCopy = badge.slice(0);
+    }
+
+    /*****newly updated on 15/04/2021 ;
+ *  for parsing new form of Reference ID;
+ ****/
+     function parseSpecial1(st2) {     
+        //voice
+        voice = st2.match(/^.*['"]\s/g);
+        voice = voice[0].split(/\.['\"]/g)[0];
+         //caseid 
+        id = st2.match(/Reference ID\s\d{1,16}/g).toString();       
+        //badge
+        var mid = st2.match(/\s[\w\s|]*\sReference/g);
+        mid = mid[0].split(' Reference')[0];
+        var mid2 = mid.split('|');
+        mid2.forEach(function (val,index) {
+            val = trimStr(val);
+            badge[index] ="upload/"+ val+".png";
+        });
+        badgeCopy = badge.slice(0);
+     }
+     
+/*****newly updated on 19/05/2020 ; 
+   for parsing voice have ( '); 
+   ****/
+    function parseSpecial2(newarr) {     
+        //parse caseid
+        id = newarr[1].match(/SR\s\d{15}/g).toString();
+        //parse voice
+        voice = newarr[0];
+        //parse badge
+        var mid = newarr[1].match(/\s[\w\s|]*\sSR/g);
+        mid = mid[0].split(' SR')[0];
+        var mid2 = mid.split('|');
+        mid2.forEach(function (val,index) {
+            val = trimStr(val);
+            badge[index] ="upload/"+ val+".png";
+        });
+            badgeCopy = badge.slice(0);
+    }
+       
+
+
     console.log("!-------"+jarray.length);
     delFile(path3 + filename + ".json");
     return jarray;
