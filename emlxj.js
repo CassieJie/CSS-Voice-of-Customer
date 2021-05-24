@@ -2,6 +2,7 @@
 var fs = require('fs');
 var emlformat = require('eml-format');
 var exec = require('child_process').execSync;
+
 //delete  file
 function delFile(path){
     fs.unlink(path,function(error){
@@ -20,6 +21,7 @@ function Case(id,engineer,date,badge,voice){
     this.customeVoice = voice;
 }
 //eml????
+
 function parseRawEml(fileName,path) {
     var eml = fs.readFileSync(path+fileName, "utf-8");
 
@@ -55,10 +57,10 @@ function parseRawEml(fileName,path) {
 //????Case????
         var jarry = new Array();
         var id;
+        
 //????paragraph
         for (var i=0;i<s.length-1;i++){
             var st1 = JSON.stringify(s[i]);
-            console.log("!!!!input the st1----"+ st1);
             //CaseID
             if (st1.match(/SR\s\d{15}/g)){
                id = st1.match(/SR\s\d{15}/g).toString();
@@ -109,7 +111,7 @@ function trimStr(str){
 }
 //msg????
 function parseRawMsg(path1,filename) {
-
+    var flag = true;
     pythonParseMsg("./pythonParseMsg/outlookmsgfile.py",path1+filename);
     var path2 = './pythonParseMsg/msgFile/emlOutPut/';
     var eml = fs.readFileSync(path2 + filename + '.eml', "utf-8");
@@ -141,8 +143,8 @@ function parseRawMsg(path1,filename) {
     fs.writeFileSync('3.json', body);
     var newarr = new Array();
     //????caseid??λ????
-     var pagraph = body.split(/\s'|\s"/g);
-
+    //  var pagraph = body.split(/\s'|\s"/g); //old
+    var pagraph = body.split(/=20    =20/g);
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
         for(let i = 0;i<pagraph.length;i++){
@@ -153,7 +155,7 @@ function parseRawMsg(path1,filename) {
             }
         }
     }else{
-        newarr = pagraph.slice(1);  //?????????
+        newarr = pagraph.slice(1);  
     }
 
     var id,voice,badgeCopy;
@@ -164,22 +166,30 @@ function parseRawMsg(path1,filename) {
     var jarray = new Array();
     for (var i = 0; i < newarr.length; i++) {
         var st1 = newarr[i];
-        console.log("-----newarr.length="+newarr.length+"-----i="+i+"-----st1="+st1)
         //CaseID
-        if(st1.match(/SR\s\d{15}/g)){
-            parseNormal(st1);
-            obj1 = new Case(id, engName, dat, badgeCopy, voice);
-            jarray.push(obj1);
-        }else if(st1.match(/Reference ID\s\d{1,16}/g)){    //if case number begin as Reference ID
-            parseSpecial1(st1);
-            obj1 = new Case(id, engName, dat, badgeCopy, voice);
-            jarray.push(obj1);
-            break;
+        // if(st1.match(/SR\s\d{15}/g)){
+        //     parseNormal(st1);
+        //     obj1 = new Case(id, engName, dat, badgeCopy, voice);
+        //     jarray.push(obj1);
+        // }else 
+        if(st1.match(/Reference ID\s\d{1,16}/g)){    //if case number begin as Reference ID
+            try{
+                parseSpecial1(st1);
+                obj1 = new Case(id, engName, dat, badgeCopy, voice);
+                jarray.push(obj1);
+            }catch(err){
+                console.log("---parse special1 error:---"+err);
+                flag = false;
+            }
+           
+        //     break;
+        // }else{
+        //     parseSpecial2(newarr);
+        //     obj1 = new Case(id, engName, dat, badgeCopy, voice);
+        //     jarray.push(obj1);
+        //     break;
         }else{
-            parseSpecial2(newarr);
-            obj1 = new Case(id, engName, dat, badgeCopy, voice);
-            jarray.push(obj1);
-            break;
+            console.log("---st1 is:---"+st1);
         }
     }
     /*****raw function for paser id,badge... 
@@ -256,11 +266,20 @@ function parseRawMsg(path1,filename) {
             badgeCopy = badge.slice(0);
     }
        
-
-
-    console.log("!-------"+jarray.length);
+var outerr;
+console.log("---flag---"+flag);
+if (flag == true){
     delFile(path3 + filename + ".json");
-    return jarray;
+    outerr = null;
+    var result = new Array(outerr, jarray);
+    return result;
+}else{
+    delFile(path3 + filename + ".json");
+    outerr = "parse msg failed";
+    var result = new Array(outerr, null);
+    return result;
+}
+   
 }
 
 module.exports = {parseRawEml,parseRawMsg};

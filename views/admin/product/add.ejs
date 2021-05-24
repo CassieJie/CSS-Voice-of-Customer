@@ -75,7 +75,9 @@
                                 <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="3" />Efficient </label><img src="../../upload/Efficient.png" width="50px" >
                                 <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="4" />Resourceful </label><img src="../../upload/Resourceful.png" width="50px">
                                 <label style="margin-left: 5px"><input name="Badge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../upload/Communicate Effectively.png" width="50px">
-                                </li>
+                                <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="6" />Accountable </label><img src="../../upload/Accountable.png" width="50px">
+    
+                            </li>
                                 <li> Date:
                                     <input style="display: inline-block;width: 200px;margin-left: 27px" type="text" name="Date" id="Date" value="2020/02" required class="form-control" autocomplete="off"  >
                                 </li>
@@ -121,7 +123,9 @@
                     <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="3" />Efficient </label><img src="../../upload/Efficient.png" width="50px" >
                     <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="4" />Resourceful </label><img src="../../upload/Resourceful.png" width="50px">
                     <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="5" />Communicate Effectively </label><img src="../../upload/Communicate Effectively.png" width="50px">
-                    </li>
+                    <label style="margin-left: 5px"><input name="SBadge" type="checkbox" value="6" />Accountable </label><img src="../../upload/Accountable.png" width="50px">
+                       
+                </li>
                     <li> Date:
                        <!-- <input style="display: inline-block;width: 200px;margin-left: 27px" type="text" name="weeklyDatePicker" id="weeklyDatePicker" required class="form-control" autocomplete="off"  > -->
                        <input type='text' style="display: inline-block;width: 200px;margin-left: 27px" id='weeklyDatePicker' placeholder="Select Week" />
@@ -225,10 +229,10 @@
     //������֤
     function check(caseID){   
         //�жϴ���������
-        var isnum = /^SR\s\d{15}$/.test(caseID);
+        var isnum = (/^Reference ID\s\d{15}$/.test(caseID))||(/^(Reference ID\s)?\d{15,16}$/.test(caseID));
         //�жϷǿա����֡�����
         if( isnum==false){
-            alert("Please input a correct caseID!(e.g. SR 120020423000164)");
+            alert("Please input a correct caseID!(e.g.Reference ID 120020423000164)");
             return false;
         }
         return true;

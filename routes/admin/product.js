@@ -103,7 +103,8 @@ router.post('/addStory',function(req,res){
         "2":"/upload/High Quality.png",
         "3":"/upload/Efficient.png",
         "4":"/upload/Resourceful.png",
-        "5":"/upload/Communicate Effectively.png"
+        "5":"/upload/Communicate Effectively.png",
+        '6':"/upload/Accountable.png"
     };
     badge = eval(badge);
     for (i=0;i<badge.length;i++) {
@@ -150,7 +151,7 @@ router.post('/doAdd',function(req,res){
 
         var sdate =[date.split(' ')[1]]+l;
            //取badge路径
-        var dic1 = {"1":"/upload/Empathetic.png","2":"/upload/High Quality.png","3":"/upload/Efficient.png","4":"/upload/Resourceful.png","5":"/upload/Communicate Effectively.png"};
+        var dic1 = {"1":"/upload/Empathetic.png","2":"/upload/High Quality.png","3":"/upload/Efficient.png","4":"/upload/Resourceful.png","5":"/upload/Communicate Effectively.png","6":"/upload/Accountable.png"};
                 // 获取json数据进行解析
         var myArray=new Array();
         badge = eval(badge)
@@ -192,7 +193,7 @@ router.get('/edit',function(req,res){
 
     DB.find('honor',{"_id":id},function(err,data){
         if (!err){
-            var dic1 = {"/upload/Empathetic.png":"1","/upload/High Quality.png":"2","/upload/Efficient.png":"3","/upload/Resourceful.png":"4","/upload/Communicate Effectively.png":'5'};
+            var dic1 = {"/upload/Empathetic.png":"1","/upload/High Quality.png":"2","/upload/Efficient.png":"3","/upload/Resourceful.png":"4","/upload/Communicate Effectively.png":'5',"/upload/Accountable.png":'6'};
             var myArray=new Array();
             var badge = data[0].Badge;
             var i;
@@ -236,7 +237,8 @@ router.post('/ReEdit',function(req,res) {
         "2": "/upload/High Quality.png",
         "3": "/upload/Efficient.png",
         "4": "/upload/Resourceful.png",
-        '5':"/upload/Communicate Effectively.png"
+        '5':"/upload/Communicate Effectively.png",
+        '6':"/upload/Accountable.png"
     }
     var myArray = new Array();
     badge = eval(badge)
@@ -257,7 +259,7 @@ router.post('/ReEdit',function(req,res) {
             if (!err) {
                 res.send({redirect: '/admin/product'});
             }
-            console.log("错误是:" + err);
+            console.log("update honor: err is" + err);
         });
 });
 
@@ -294,7 +296,7 @@ function rename(oldp, newp) {
     fs.renameSync(oldp, newp);
     }
 
-
+var outerr;
 router.post('/file', function(req, res, next) {
     var form = new formidable.IncomingForm();
     //设置编辑
@@ -304,15 +306,10 @@ router.post('/file', function(req, res, next) {
     //保留后缀
     form.keepExtensions = true;
 
-    //设置单文件大小限制
-    // form.maxFieldsSize = 2 * 1024 * 1024;
-    //form.maxFields = 1000;  设置所以文件的大小总和
-    //rename upload file
 
 //解析文件得到obj
     var obj;
     form.parse(req, function (err, fields, files) {
-        console.log(files.thumbnail.path);
         var t = (new Date()).getTime();
         //生成随机数
         var ran = parseInt(Math.random() * 8999 + 10000);
@@ -320,11 +317,10 @@ router.post('/file', function(req, res, next) {
         var extname = path.extname(files.thumbnail.name);
         //path.normalize('./path//upload/data/../file/./123.jpg'); 规范格式文件名
         var oldpath = path.normalize(files.thumbnail.path);
-
         //新的路径
         let newfilename = t + ran + extname;
         var newpath;
-
+        var result;
 
         if (extname == '.eml') {
             newpath = 'pythonParseMsg/emlFile/' + newfilename;
@@ -334,67 +330,69 @@ router.post('/file', function(req, res, next) {
         } else if (extname == '.msg') {
             newpath = 'pythonParseMsg/msgFile/' + newfilename;
             rename(oldpath, newpath);
-            obj = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename);
+            try{
+                result = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename); 
+
+                if(result[0] === null && !(result[1] === null)){
+                var newobj = result[1];
+                //循环
+                newobj.forEach(function (val,i) {
+                var caseID = newobj[i].caseId;
+                var engineer = newobj[i].cengineer;
+                engineer = engineer.toLowerCase();
+                    //工程师的名字-邮箱映射查询
+                DB.find('engineer',{"engEmail":engineer},function (err,data) {
+                    if(!err){
+                        if(!data[0]){
+                        }else{
+                            engineer = data[0]._id;
+                        }
+                    }else{
+                        console.log(err);
+                    }
+                });
+                var voice = newobj[i].customeVoice;
+                var date = newobj[i].cdate;
+                console.log("HI here date is"+date);
+                var myArray = newobj[i].cbadge;
+                var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
+                var l = map[date.split(' ')[0]];
+                var sdate =[date.split(' ')[1]]+l;
+                // 2.连接数据库插入数据
+                DB.find('honor', {_id: caseID}, function (err, data) {
+        
+                    if (err) {
+                        console.log('err---find key error'+err);
+                    }else if(data[0]){
+                        console.log('err---find key yes');
+                    }else {
+                            console.log('err---find key no');
+                            DB.insert('honor', {
+                                _id: caseID,
+                                Engineer: engineer,
+                                CustomerVoice: voice,
+                                Date: date,
+                                Badge: myArray,
+                                sortDate:sdate
+                            }, function (err, data) {
+                                if (err) {
+                                   console.log(err);
+                                }
+                            });
+                        }
+                })
+                });
+                res.send('Upload and parse email successfully！');  
+                }else{
+                    res.send('Upload and parse email failed！');
+                }                
+            }catch(err){
+                console.log("----Parse error--"+err);
+                res.send('Upload and parse email failed！');
+            } 
             delFile(newpath);
         }
-
-        var newobj = obj;
-        //循环
-    newobj.forEach(function (val,i) {
-        var caseID = newobj[i].caseId;
-        var engineer = newobj[i].cengineer;
-        engineer = engineer.toLowerCase();
-        // var dic1 = {"ZIZHUAN@microsoft.com":"Neil Zhuang","WEXING@microsoft.com":"Wenli Xing","WEYAO@microsoft.com":"Victor Yao","ZHAWAN@microsoft.com":"Grace Wang","ZIXIE@microsoft.com":"Martin Xie","TILA@microsoft.com":"Tianmao Lan"};
-        // if (engineer in dic1){
-        //     engineer = dic1[engineer];
-        //     console.log("true"+engineer);
-        // }
-            //工程师的名字-邮箱映射查询
-        DB.find('engineer',{"engEmail":engineer},function (err,data) {
-            if(!err){
-                if(!data[0]){
-                }else{
-                    engineer = data[0]._id;
-                }
-            }else{
-                console.log(err);
-            }
-
-        });
-        var voice = newobj[i].customeVoice;
-        var date = newobj[i].cdate;
-        console.log("HI here date is"+date);
-        var myArray = newobj[i].cbadge;
-        var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
-        var l = map[date.split(' ')[0]];
-
-        var sdate =[date.split(' ')[1]]+l;
-        // 2.连接数据库插入数据
-        DB.find('honor', {_id: caseID}, function (err, data) {
-
-            if (err) {
-                console.log('err---find key error'+err);
-            }else if(data[0]){
-                console.log('err---find key yes');
-            }else {
-                    console.log('err---find key no');
-                    DB.insert('honor', {
-                        _id: caseID,
-                        Engineer: engineer,
-                        CustomerVoice: voice,
-                        Date: date,
-                        Badge: myArray,
-                        sortDate:sdate
-                    }, function (err, data) {
-                        if (err) {
-                           console.log(err);
-                        }
-                    });
-                }
-        })
-    });
-        res.send('Upload and parse email successfully！');
-    });
+    });    
 });
 
 
