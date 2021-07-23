@@ -331,58 +331,64 @@ router.post('/file', function(req, res, next) {
             newpath = 'pythonParseMsg/msgFile/' + newfilename;
             rename(oldpath, newpath);
             try{
+                console.log("--------------------------into try");
                 result = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename); 
-
+console.log("--------result[0]"+result[0]+"--------result1"+result[1]);
                 if(result[0] === null && !(result[1] === null)){
-                var newobj = result[1];
-                //循环
-                newobj.forEach(function (val,i) {
-                var caseID = newobj[i].caseId;
-                var engineer = newobj[i].cengineer;
-                engineer = engineer.toLowerCase();
-                    //工程师的名字-邮箱映射查询
-                DB.find('engineer',{"engEmail":engineer},function (err,data) {
-                    if(!err){
-                        if(!data[0]){
+                    var newobj = result[1];
+                    //循环
+                    newobj.forEach(function (val,i) {
+                    var caseID = newobj[i].caseId;
+                    var engineer = newobj[i].cengineer;
+                    engineer = engineer.toLowerCase();
+                        //工程师的名字-邮箱映射查询
+                    DB.find('engineer',{"engEmail":engineer},function (err,data) {
+                        if(!err){
+                            if(!data[0]){
+                            }else{
+                                engineer = data[0]._id;
+                            }
                         }else{
-                            engineer = data[0]._id;
+                            console.log(err);
                         }
-                    }else{
-                        console.log(err);
-                    }
-                });
-                var voice = newobj[i].customeVoice;
-                var date = newobj[i].cdate;
-                console.log("HI here date is"+date);
-                var myArray = newobj[i].cbadge;
-                var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
-                var l = map[date.split(' ')[0]];
-                var sdate =[date.split(' ')[1]]+l;
-                // 2.连接数据库插入数据
-                DB.find('honor', {_id: caseID}, function (err, data) {
-        
-                    if (err) {
-                        console.log('err---find key error'+err);
-                    }else if(data[0]){
-                        console.log('err---find key yes');
-                    }else {
-                            console.log('err---find key no');
-                            DB.insert('honor', {
-                                _id: caseID,
-                                Engineer: engineer,
-                                CustomerVoice: voice,
-                                Date: date,
-                                Badge: myArray,
-                                sortDate:sdate
-                            }, function (err, data) {
-                                if (err) {
-                                   console.log(err);
-                                }
-                            });
-                        }
-                })
-                });
-                res.send('Upload and parse email successfully！');  
+                    });
+                    var voice = newobj[i].customeVoice;
+                    var date = newobj[i].cdate;
+                    console.log("HI here date is"+date);
+                    var myArray = newobj[i].cbadge;
+                    var map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06","Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"};
+                    var l = map[date.split(' ')[0]];
+                    var sdate =[date.split(' ')[1]]+l;
+                    console.log("--------------------------caseID"+caseID);
+                    // 2.连接数据库插入数据
+                    DB.find('honor', {_id: caseID}, function (err, data) {
+            
+                        if (err) {
+                            console.log('err---find key error'+err);
+                            res.send('insert case to DB error');  
+                        }else if(data[0]){
+                            console.log('err---find key yes');
+                            res.send('Duplicate caseID！');  
+                        }else {
+                                console.log('err---find key no');
+                                DB.insert('honor', {
+                                    _id: caseID,
+                                    Engineer: engineer,
+                                    CustomerVoice: voice,
+                                    Date: date,
+                                    Badge: myArray,
+                                    sortDate:sdate
+                                }, function (err, data) {
+                                    if (err) {
+                                    console.log(err);
+                                    }else{
+                                        res.send('Upload and parse email successfully！');  
+                                    }
+                                });
+                            }
+                    })
+                    });
+                    
                 }else{
                     res.send('Upload and parse email failed！');
                 }                
