@@ -331,9 +331,9 @@ router.post('/file', function(req, res, next) {
             newpath = 'pythonParseMsg/msgFile/' + newfilename;
             rename(oldpath, newpath);
             try{
-                console.log("--------------------------into try");
+                console.log("--------------------------into try catch block---------------------");
                 result = eml.parseRawMsg('pythonParseMsg/msgFile/', newfilename); 
-console.log("--------result[0]"+result[0]+"--------result1"+result[1]);
+                console.log("--------result[0]"+result[0]+"--------result1"+result[1]);
                 if(result[0] === null && !(result[1] === null)){
                     var newobj = result[1];
                     //循环

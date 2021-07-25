@@ -144,7 +144,10 @@ function parseRawMsg(path1,filename) {
     var newarr = new Array();
     //????caseid??λ????
     //  var pagraph = body.split(/\s'|\s"/g); //old
-    var pagraph = body.split(/=20    =20/g);
+    // var pagraph = body.split(/=20   =20/g);   //the num of space maybe cause error, need check
+    var pagraph = body.split(/autoSubmit=3Dtrue>/g);
+    console.log("DEBUGG----pagraph:"+pagraph); 
+    
     if (body.match(/Microsoft Translator/g)){
         pagraph = pagraph.slice(2);
         for(let i = 0;i<pagraph.length;i++){
@@ -174,7 +177,8 @@ function parseRawMsg(path1,filename) {
         // }else 
         if(st1.match(/Reference ID\s\d{1,16}/g)){    //if case number begin as Reference ID
             try{
-                parseSpecial1(st1);
+                console.log("DEBUGG----ST1:"+st1);
+                parseSpecial1(st1);  
                 obj1 = new Case(id, engName, dat, badgeCopy, voice);
                 jarray.push(obj1);
             }catch(err){
@@ -230,14 +234,18 @@ function parseRawMsg(path1,filename) {
     /*****newly updated on 15/04/2021 ;
  *  for parsing new form of Reference ID;
  ****/
-     function parseSpecial1(st2) {     
+     function parseSpecial1(param) {     
         //voice
-        voice = st2.match(/^.*['"]\s/g);
-        voice = voice[0].split(/\.['\"]/g)[0];
+        // voice = param.match(/^.*['"]\s/g);
+        // voice = voice[0].split(/\.['\"]/g)[0];
+        voice = param.split(/=20\s*=20/g);  
+        voice = voice[1].split('Have feedback about these notifications?');
+        voice = voice[0].split(/\.\s*['\"]/g)[0];
+        console.log("DEBUGG---voice:"+voice);
          //caseid 
-        id = st2.match(/Reference ID\s\d{1,16}/g).toString();       
+        id = param.match(/Reference ID\s\d{1,16}/g).toString();       
         //badge
-        var mid = st2.match(/\s[\w\s|]*\sReference/g);
+        var mid = param.match(/\s[\w\s|]*\sReference/g);
         mid = mid[0].split(' Reference')[0];
         var mid2 = mid.split('|');
         mid2.forEach(function (val,index) {
